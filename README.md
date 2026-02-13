@@ -256,11 +256,11 @@ python experiments/ablation_studies.py
 If you use this work in your research, please cite our paper:
 
 ```bibtex
-@article{chowdhury2024synergistic,
-  title={Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models},
+@article{chowdhury2026teaching,
+  title={Teaching Large Language Models to Think Twice: A Three-Stage Framework for Self-Correcting Mathematical Reasoning},
   author={Chowdhury, Md Anisur Rahman and Patel, Pratham and Jawar, Shahajada and Wang, Kefei},
   journal={arXiv preprint arXiv:2409.12345},
-  year={2024},
+  year={2026},
   institution={Gannon University}
 }
 ```
