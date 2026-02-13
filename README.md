@@ -83,8 +83,8 @@ Our novel three-phase training approach:
 
 ```bash
 # Clone the repository
-git clone https://github.com/pratham/Self-Correcting-LLM-Research.git
-cd Self-Correcting-LLM-Research
+git clone https://github.com/ANIS151993/Self-Correcting-LLM-localhost.git
+cd Self-Correcting-LLM-localhost
 
 # Install dependencies
 pip install -r requirements.txt
@@ -312,8 +312,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact & Support
 
-- 🐛 **Issues**: [GitHub Issues](https://github.com/pratham/Self-Correcting-LLM-Research/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/pratham/Self-Correcting-LLM-Research/discussions)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/ANIS151993/Self-Correcting-LLM-localhost/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/ANIS151993/Self-Correcting-LLM-localhost/discussions)
 - 📧 **Email**: [engr.aanis@gmail.com](mailto:engr.aanis@gmail.com)
 
 ---

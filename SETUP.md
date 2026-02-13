@@ -20,8 +20,8 @@ This guide will help you set up the Synergistic Self-Correction (S2C) framework 
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/pratham/Self-Correcting-LLM-Research.git
-cd Self-Correcting-LLM-Research
+git clone https://github.com/ANIS151993/Self-Correcting-LLM-localhost.git
+cd Self-Correcting-LLM-localhost
 ```
 
 ### 2. Create Environment
