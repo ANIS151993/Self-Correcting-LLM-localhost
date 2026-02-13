@@ -256,12 +256,12 @@ python experiments/ablation_studies.py
 If you use this work in your research, please cite our paper:
 
 ```bibtex
-@article{patel2024synergistic,
+@article{chowdhury2024synergistic,
   title={Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models},
-  author={Patel, Pratham and Jindal, Abhishek},
+  author={Chowdhury, Md Anisur Rahman and Patel, Pratham and Jawar, Shahajada and Wang, Kefei},
   journal={arXiv preprint arXiv:2409.12345},
   year={2024},
-  institution={Dhirubhai Ambani Institute of Information and Communication Technology}
+  institution={Gannon University}
 }
 ```
 
@@ -269,11 +269,17 @@ If you use this work in your research, please cite our paper:
 
 ## 👥 Authors
 
-**Pratham Patel** - Gannon University
+**Md Anisur Rahman Chowdhury*** - Gannon University *(Co-Corresponding Author)*
+📧 [engr.aanis@gmail.com](mailto:engr.aanis@gmail.com)
+
+**Pratham Patel*** - Gannon University *(Co-Corresponding Author)*
 📧 [patel292@gannon.edu](mailto:patel292@gannon.edu)
 
-**Abhishek Jindal** - DA-IICT *(Corresponding Author)*
-📧 [abhishek_jindal@daiict.ac.in](mailto:abhishek_jindal@daiict.ac.in)
+**Shahajada Jawar** - Gannon University
+📧 [shahajadajawar@gmail.com](mailto:shahajadajawar@gmail.com)
+
+**Kefei Wang** - Gannon University
+📧 [wang039@gannon.edu](mailto:wang039@gannon.edu)
 
 ---
 
@@ -308,7 +314,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/pratham/Self-Correcting-LLM-Research/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/pratham/Self-Correcting-LLM-Research/discussions)
-- 📧 **Email**: [patel292@gannon.edu](mailto:patel292@gannon.edu)
+- 📧 **Email**: [engr.aanis@gmail.com](mailto:engr.aanis@gmail.com)
 
 ---
 
