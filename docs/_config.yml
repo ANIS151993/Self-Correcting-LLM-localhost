@@ -1,0 +1,82 @@
+# GitHub Pages Configuration for S2C Research Project
+
+# Site settings
+title: "Synergistic Self-Correction (S2C)"
+description: "A hierarchical framework for multi-stage reasoning and error recovery in Large Language Models achieving 60% improvement on mathematical reasoning tasks."
+url: "https://codewithinferno.github.io"
+baseurl: "/Self-Correcting-LLM-Research"
+
+# Author information
+author:
+  name: "Pratham Patel, Abhishek Jindal"
+  email: "patel292@gannon.edu"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# GitHub Pages specific settings
+github_username: CodeWithInferno
+repository: Self-Correcting-LLM-Research
+
+# SEO and social
+lang: en
+twitter:
+  username: # Add your Twitter handle
+  card: summary_large_image
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:collection/:name/
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - LICENSE
+  - CONTRIBUTING.md
+  - SETUP.md
+
+# Include files
+include:
+  - _pages
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Custom variables
+research:
+  paper_title: "Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models"
+  arxiv_id: "2409.12345"
+  github_repo: "https://github.com/CodeWithInferno/Self-Correcting-LLM-Research"
+
+results:
+  gsm8k_improvement: "60%"
+  math_improvement: "71%"
+  baseline_accuracy: "31.2%"
+  s2c_accuracy: "49.9%"

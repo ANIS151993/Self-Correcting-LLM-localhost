@@ -1,0 +1,71 @@
+\relax 
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}The Reasoning Crisis in Large Language Models}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Limitations of Current Approaches}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Our Approach: Synergistic Self-Correction}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Key Contributions}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Prompting-Based Reasoning Enhancement}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Architecture-Based Approaches}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Training-Based Reasoning Improvement}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Process Supervision and Reward Modeling}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}The Synergistic Self-Correction Framework}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Stage 1: Generator ($\mathcal  {G}$)}{5}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The Synergistic Self-Correction (S2C) Framework Architecture. The three-stage pipeline decomposes reasoning into specialized computational personas: Generator produces initial solutions with Critical Points, Critic systematically evaluates potential errors, and Synthesizer integrates feedback for refined solutions.}}{5}{}\protected@file@percent }
+\newlabel{fig:s2c_architecture}{{1}{5}{}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Stage 2: Critic ($\mathcal  {C}$)}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}Stage 3: Synthesizer ($\mathcal  {S}$)}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Cognitive Dissonance Training}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Phase 1: Structural Alignment via Supervised Fine-Tuning}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Phase 2: Specialized Reward Model Training}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Phase 3: Hierarchical Process-Based Reward Optimization}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Theoretical Analysis}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Convergence Properties}{7}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Training Performance During Cognitive Dissonance Training. The figure shows PPO reward progression, policy loss, value loss, and entropy over training iterations. The consistent improvement in mean reward demonstrates successful learning of self-correction capabilities.}}{7}{}\protected@file@percent }
+\newlabel{fig:training_curves}{{2}{7}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Error Correction Capabilities}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Computational Complexity}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Setup}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Datasets and Evaluation Metrics}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Model Architecture and Training Details}{8}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces GSM8K Performance Comparison. S2C achieves 49.9\% accuracy, representing a 60\% relative improvement over the 31.2\% baseline CoT performance. Error bars show 95\% confidence intervals with statistical significance indicators (***p < 0.001).}}{9}{}\protected@file@percent }
+\newlabel{fig:gsm8k_results}{{3}{9}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results and Analysis}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Main Results}{9}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Performance Comparison on Mathematical and Reasoning Benchmarks}}{9}{}\protected@file@percent }
+\newlabel{tab:main_results_extended}{{1}{9}{}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Statistical Significance Testing Results}}{9}{}\protected@file@percent }
+\newlabel{tab:statistical_significance}{{2}{9}{}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Comprehensive Ablation Studies}{9}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comprehensive Ablation Study on GSM8K Dataset}}{9}{}\protected@file@percent }
+\newlabel{tab:comprehensive_ablation}{{3}{9}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Detailed Error Analysis and Correction Patterns}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Comprehensive Ablation Study Results. The figure shows the contribution of each component to final performance, with the full S2C model achieving 49.9\% accuracy. The three-stage architecture and dual reward models provide the largest contributions.}}{10}{}\protected@file@percent }
+\newlabel{fig:ablation_results}{{4}{10}{}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comprehensive Error Analysis. Left: Distribution of error types in initial solutions. Right: Correction success rates by error category. S2C achieves highest success with computational errors (78\%) and lowest with conceptual errors (42\%).}}{10}{}\protected@file@percent }
+\newlabel{fig:error_analysis}{{5}{10}{}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Computational Efficiency and Scalability Analysis}{10}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Computational Efficiency Comparison}}{10}{}\protected@file@percent }
+\newlabel{tab:efficiency_comprehensive}{{4}{10}{}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Scalability Analysis Across Problem Complexity}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Computational Efficiency Analysis. S2C achieves superior accuracy-efficiency trade-offs compared to baseline methods. The efficiency ratio (accuracy per computational cost) shows S2C is 6.7x more efficient than Self-Consistency while achieving higher accuracy.}}{11}{}\protected@file@percent }
+\newlabel{fig:efficiency}{{6}{11}{}{figure.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Theoretical Implications}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Qualitative S2C Reasoning Example. The figure shows a complete S2C trace on a GSM8K problem: (1) Generator produces initial solution with Critical Points, (2) Critic identifies computational error in step 3, (3) Synthesizer successfully corrects the error for the final solution.}}{11}{}\protected@file@percent }
+\newlabel{fig:qualitative_example}{{7}{11}{}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Limitations and Future Work}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Broader Impact}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{}\protected@file@percent }
+\bibcite{brown2020language}{1}
+\bibcite{ouyang2022training}{2}
+\bibcite{wei2022emergent}{3}
+\bibcite{hendrycks2021measuring}{4}
+\bibcite{cobbe2021training}{5}
+\bibcite{wang2022self}{6}
+\bibcite{wei2022chain}{7}
+\bibcite{zelikman2022star}{8}
+\bibcite{lightman2023lets}{9}
+\bibcite{yao2023tree}{10}
+\gdef \@abspage@last{13}

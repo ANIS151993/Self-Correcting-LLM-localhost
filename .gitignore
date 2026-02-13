@@ -1,0 +1,78 @@
+.DS_Store
+.env
+.stignore
+venv/
+.venv-backups/22879686/backup.log
+.venv-backups/22879686/venv-main-2025-07-12-0734.txt
+.venv-backups/22879686/venv-main-2025-07-12-0800.txt
+.venv-backups/22879686/venv-main-2025-07-12-0830.txt
+.venv-backups/22879686/venv-main-2025-07-12-0900.txt
+.venv-backups/22879686/venv-main-2025-07-12-0930.txt
+.venv-backups/22879686/venv-main-2025-07-12-1000.txt
+.venv-backups/22879686/venv-main-2025-07-12-1030.txt
+.venv-backups/22879686/venv-main-2025-07-12-1100.txt
+.venv-backups/22879686/venv-main-2025-07-12-1130.txt
+.venv-backups/22879686/venv-main-2025-07-12-1200.txt
+.venv-backups/22879686/venv-main-2025-07-12-1230.txt
+.venv-backups/22879686/venv-main-2025-07-12-1300.txt
+.venv-backups/22879686/venv-main-2025-07-12-1330.txt
+.venv-backups/22879686/venv-main-2025-07-12-1400.txt
+.venv-backups/22879686/venv-main-2025-07-12-1430.txt
+.venv-backups/22879686/venv-main-2025-07-12-1500.txt
+.venv-backups/22879686/venv-main-2025-07-12-1530.txt
+.venv-backups/22879686/venv-main-2025-07-12-1600.txt
+.venv-backups/22879686/venv-main-2025-07-12-1630.txt
+.venv-backups/22879686/venv-main-2025-07-12-1700.txt
+.venv-backups/22879686/venv-main-2025-07-12-1730.txt
+.venv-backups/22879686/venv-main-2025-07-12-1800.txt
+.venv-backups/22879686/venv-main-2025-07-12-1830.txt
+.venv-backups/22879686/venv-main-2025-07-12-1900.txt
+.venv-backups/22879686/venv-main-2025-07-12-1930.txt
+.venv-backups/22879686/venv-main-2025-07-12-2000.txt
+.venv-backups/22879686/venv-main-2025-07-12-2030.txt
+.venv-backups/22879686/venv-main-2025-07-12-2100.txt
+.venv-backups/22879686/venv-main-2025-07-12-2130.txt
+.venv-backups/22879686/venv-main-2025-07-12-2200.txt
+.venv-backups/22879686/venv-main-2025-07-12-2230.txt
+.venv-backups/22879686/venv-main-2025-07-12-2300.txt
+.venv-backups/22879686/venv-main-latest.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# Log files
+*.log
+logs/
+
+# # Data and model files
+# *.csv
+# *.json
+# *.pdf
+# *.png
+# *.h5
+# *.bin
+# *.safetensors
+# s2c_llama3_8b_checkpoints/
+# s2c_llama3_8b_final/
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+
+# Syncthing
+.stfolder/

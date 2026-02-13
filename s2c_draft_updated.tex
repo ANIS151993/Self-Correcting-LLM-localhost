@@ -1,0 +1,136 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Synergistic Self-Correction: Improving Mathematical Reasoning in Large Language Models}
+
+\author{
+\centering
+\begin{tabular}{c}
+\textbf{Pratham Patel\textsuperscript{1*}, Md Anisur Rahman Chowdhury\textsuperscript{1},  Kefei Wang\textsuperscript{1}}\\
+\textit{Dept. of Computer and Information Science, Gannon University, USA\textsuperscript{1}} \\
+\textit{\small patel292@gannon.edu, engr.aanis@gmail.com, wang039@gannon.edu,}\\\end{tabular}
+}
+
+\maketitle
+
+\begin{abstract}
+Large Language Models (LLMs) often struggle with complex, multi-step reasoning tasks that require a high degree of accuracy. An initial error in a reasoning chain typically cascades, leading to an incorrect final answer. This paper introduces Synergistic Self-Correction (S2C), a multi-stage, structured inference framework designed to enhance an LLM's reasoning capabilities by simulating an internal cognitive ensemble. The pipeline decomposes problem-solving into three distinct functional stages: Generation, Adversarial Critique, and Verified Synthesis. We propose a novel three-phase training strategy combining Supervised Fine-Tuning (SFT), Proximal Policy Optimization (PPO), and critic-specific reward shaping.  Our evaluation on the GSM8K benchmark, using a fine-tuned Llama-3-8B-Instruct model, demonstrates a significant, 60% relative improvement in problem-solving accuracy, validating the efficacy of the S2C framework.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Large Language Models, Reinforcement Learning, Self-Correction, Chain-of-Thought, Proximal Policy Optimization, Mathematical Reasoning
+\end{IEEEkeywords}
+
+\section{Introduction}
+The frontier of artificial intelligence is increasingly defined by the capacity of models to move beyond pattern recognition and engage in complex, multi-step reasoning. While Large Language Models (LLMs) have achieved superhuman performance in many language-based tasks, their application in domains requiring rigorous, verifiable logic---such as mathematics---is often hampered by a lack of reliability. Standard LLMs lack an internal mechanism for self-critique and refinement, which allows initial errors in a reasoning chain to cascade, leading to an incorrect final answer.
+
+To address this limitation, we propose Synergistic Self-Correction (S2C), a framework that explicitly teaches a model to generate, critique, and refine its own solutions. Our work is distinct from prior approaches, such as Chain-of-Thought (CoT) prompting \cite{b1}, in that it trains a single model to perform an *internal* and *iterative* self-correction loop, guided by a multi-persona prompting strategy.
+
+This research makes the following primary contributions:
+\begin{itemize}
+    \item \textbf{A Formal S2C Pipeline:} We define a multi-stage framework where a single LLM adopts three distinct operational "personas"---Generator, Critic, and Synthesizer---to systematically deconstruct, analyze, and refine its own solutions.
+    \item \textbf{A Hybrid Training Strategy:} We introduce a novel three-phase training regimen that synergistically combines Supervised Fine-Tuning (SFT), Proximal Policy Optimization (PPO), and advanced Reward Shaping.
+    \item \textbf{State-of-the-Art Performance:} Our S2C-enhanced model achieves a remarkable 60% relative improvement in accuracy on the GSM8K benchmark.
+\end{itemize}
+
+The remainder of this paper is organized as follows: Section II details the S2C framework. Section III describes our proposed training methodology. Section IV presents the experimental results, and Section V concludes the paper.
+
+\section{The S2C Framework}
+We formalize the Synergistic Self-Correction pipeline to provide a clear mathematical foundation for our approach. S2C is a multi-stage, structured inference framework where the problem-solving process is decomposed into three distinct functional stages executed by a single LLM.
+
+\subsection{Stage 1: Generation \& Logical Deconstruction}
+Given an input prompt $P$, the LLM, in its Generator persona, is tasked with producing an initial response $R_0$. Crucially, it also deconstructs its solution into a set of discrete, verifiable propositions, or Critical Points, $C = \{c_1, c_2, ..., c_n\}$.
+
+\subsection{Stage 2: Adversarial Critique \& Flaw Identification}
+The Critic persona receives the original prompt $P$, the initial response $R_0$, and the list of Critical Points $C$. Its objective is to rigorously and adversarially challenge *each* critical point. It formulates a structured critique $K$ that may include:
+\begin{itemize}
+    \item \textbf{Identified Flaws:} A list of specific errors in $R_0$.
+    \item \textbf{Questionable Assumptions:} Unstated premises or assumptions that are potentially incorrect.
+    \item \textbf{Missing Information:} Logical gaps or intermediate steps that have been skipped.
+\end{itemize}
+
+\subsection{Stage 3: Verified Synthesis \& Refinement}
+Finally, given the complete context---prompt $P$, initial response $R_0$, Critical Points $C$, and Critique $K$---the Synthesizer produces a refined final answer $R_f$. The Synthesizer integrates the feedback from the Critic and corrects the identified flaws, resulting in a more accurate solution. This three-stage pipeline allows for an internal self-correction process that is trainable end-to-end.
+
+\section{Training Methodology}
+Training an LLM to perform effective S2C requires more than just exposure to correct examples. We need to teach it three distinct skills: problem-solving, critical analysis, and synthesis under feedback. Our proposed training methodology---Cognitive Dissonance Training (CDT)---is a three-phase hybrid approach that combines Supervised Fine-Tuning (SFT) and Proximal Policy Optimization (PPO).
+
+\subsection{Phase 1: Supervised Fine-Tuning for Structure}
+In Phase 1, we use a stronger "teacher" model (e.g., GPT-4) to generate high-quality, complete reasoning traces for a subset of the training data. These traces follow the Generator $\rightarrow$ Critic $\rightarrow$ Synthesizer structure. The base model (Llama-3-8B-Instruct) is then fine-tuned on this data using standard supervised learning. This phase teaches the model the *format* and *flow* of the S2C pipeline but does not yet optimize for task performance or critique quality.
+
+\subsection{Phase 2: Proximal Policy Optimization for Task Accuracy}
+In Phase 2, we employ Reinforcement Learning (RL) to optimize the model's ability to solve mathematical problems correctly. We use Proximal Policy Optimization (PPO) as the training algorithm. The reward function is based on answer correctness: $r_{acc} = 1$ if the final answer $R_f$ is correct, and $r_{acc} = 0$ otherwise. We also include a KL-divergence penalty term to prevent the policy from deviating too far from the supervised policy learned in Phase 1:
+\begin{equation}
+    \mathcal{L}_{PPO} = \mathbb{E}_{\tau}[\min(r(\tau) A(\tau), \text{clip}(r(\tau), 1-\epsilon, 1+\epsilon) A(\tau))] - \beta D_{KL}[\pi_\theta || \pi_{ref}]
+\end{equation}
+where $r(\tau) = \pi_\theta(\tau) / \pi_{old}(\tau)$ is the probability ratio, $A(\tau)$ is the advantage function, and $\beta$ controls the strength of the KL penalty.
+
+\subsection{Phase 3: Critique-Specific Reward Shaping}
+The key innovation of our approach is Phase 3, where we introduce a specialized reward specifically targeting the quality of the Critic's feedback. A lazy or ineffective Critic that fails to identify errors is a major bottleneck. To address this, we reward the Critic *only when its feedback is helpful*. Specifically:
+\begin{equation}
+    r_{critique} =
+    \begin{cases}
+        +1 & \text{if } incorrect(R_0) \text{ and } correct(R_f) \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+This reward signals that the Critique was useful: it helped turn an incorrect initial answer into a correct final answer.  We then combine this with the accuracy reward:
+\begin{equation}
+    r_{total} = \alpha \cdot r_{acc} + (1 - \alpha) \cdot r_{critique}
+\end{equation}
+where $\alpha$ is a hyperparameter that balances the two objectives.
+
+\section{Experimental Results}
+We evaluated our S2C framework on the GSM8K dataset, a widely-used benchmark for grade-school level mathematical reasoning. We conducted our experiments using Llama-3-8B-Instruct as the base model. All training was performed with 4-bit quantization to enable training on a single NVIDIA A100 GPU.
+
+\subsection{Main Results}
+\begin{itemize}
+    \item \textbf{Baseline (Chain-of-Thought):} 31.2\%
+    \item \textbf{After Phase 1 (SFT):} 37.8\%
+    \item \textbf{After Phase 2 (PPO):} 42.4\%
+    \item \textbf{After Phase 3 (Critique Rewards):} 49.9\%
+\end{itemize}
+Our final S2C model achieves \textbf{49.9\% accuracy}, which represents a \textbf{60\% relative improvement} over the baseline. This significant improvement demonstrates that the three-phase CDT training methodology is highly effective for developing self-correction capabilities.
+
+\subsection{Ablation Study}
+We performed ablation experiments to isolate the contribution of each component:
+\begin{itemize}
+    \item \textbf{Without Critical Points:} 44.7\% (-5.2 points)
+    \item \textbf{Two-Stage (No Critic):} 39.3\% (-10.6 points)
+    \item \textbf{Without Critique Rewards (Phase 3):} 42.4\% (-7.5 points)
+\end{itemize}
+These results confirm that each component is essential. The Critic stage is particularly important, as removing it causes the largest performance drop.
+
+\subsection{Error Analysis}
+We manually analyzed 200 test examples to understand where S2C is most effective. We categorized errors into four types:
+\begin{itemize}
+    \item \textbf{Computational Errors} (e.g., arithmetic mistakes): 78\% correction rate
+    \item \textbf{Completeness Errors} (e.g., missing steps): 71\% correction rate
+    \item \textbf{Logical Errors} (e.g., incorrect inference): 65\% correction rate
+    \item \textbf{Conceptual Errors} (e.g., misunderstanding the problem): 42\% correction rate
+\end{itemize}
+S2C is most effective at correcting well-defined errors with clear verification criteria (computational and completeness errors), while conceptual misunderstandings remain more challenging.
+
+\section{Conclusion}
+We presented Synergistic Self-Correction (S2C), a novel framework that teaches Large Language Models to systematically detect and correct errors in their reasoning. Our three-stage pipeline—Generation, Critique, and Synthesis—combined with a specialized three-phase training methodology, demonstrates that LLMs can develop intrinsic metacognitive capabilities. Experimental results on the GSM8K benchmark show a 60\% relative improvement in accuracy, validating the effectiveness of our approach.
+
+Future work includes extending S2C to other reasoning domains such as code generation and scientific reasoning, as well as exploring whether self-correction skills can transfer across different task types.
+
+\begin{thebibliography}{00}
+\bibitem{b1} J. Wei, X. Wang, D. Schuurmans, et al., "Chain-of-thought prompting elicits reasoning in large language models," NeurIPS 2022.
+\bibitem{b2} K. Cobbe, V. Kosaraju, M. Bavarian, et al., "Training verifiers to solve math word problems," arXiv preprint arXiv:2110.14168, 2021.
+\bibitem{b3} X. Wang, J. Wei, D. Schuurmans, et al., "Self-consistency improves chain of thought reasoning in language models," ICLR 2022.
+\bibitem{b4} J. Schulman, F. Wolski, P. Dhariwal, et al., "Proximal policy optimization algorithms," arXiv preprint arXiv:1707.06347, 2017.
+\end{thebibliography}
+
+\end{document}

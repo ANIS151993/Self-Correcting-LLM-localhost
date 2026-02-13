@@ -1,0 +1,76 @@
+# Supervised Fine-Tuning Configuration for S2C
+# Phase 1 of Cognitive Dissonance Training (CDT)
+
+model:
+  base_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+  load_in_8bit: false
+  load_in_4bit: true
+  torch_dtype: "float16"
+
+# LoRA/PEFT Configuration
+peft:
+  r: 16
+  lora_alpha: 32
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  lora_dropout: 0.1
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# Dataset Configuration
+dataset:
+  name: "gsm8k"
+  train_split: "train"
+  validation_split: "test"
+  max_length: 2048
+  test_size: 0.1
+  seed: 42
+
+# Training Parameters
+training:
+  output_dir: "./models/s2c_sft"
+  num_train_epochs: 3
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 8
+  learning_rate: 2e-4
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  lr_scheduler_type: "cosine"
+
+  # Optimization
+  optim: "adamw_torch"
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_epsilon: 1e-8
+  max_grad_norm: 1.0
+
+  # Logging and Saving
+  logging_steps: 10
+  save_steps: 500
+  save_total_limit: 3
+  evaluation_strategy: "steps"
+  eval_steps: 500
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+
+  # Other Settings
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+  report_to: ["wandb"]
+  run_name: "s2c_sft_phase1"
+
+# Generation Parameters for Evaluation
+generation:
+  max_new_tokens: 512
+  do_sample: true
+  temperature: 0.7
+  top_p: 0.9
+  num_return_sequences: 1
+
+# Weights & Biases Configuration
+wandb:
+  project: "s2c_framework"
+  entity: "your_wandb_username"
+  tags: ["s2c", "sft", "phase1", "llama3"]
+  notes: "Phase 1 SFT training for S2C framework"

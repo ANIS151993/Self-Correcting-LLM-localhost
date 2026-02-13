@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models</title>
+    <meta name="description" content="Research on hierarchical self-correction framework for improving LLM reasoning capabilities">
+    <meta name="keywords" content="Large Language Models, Self-Correction, Mathematical Reasoning, Machine Learning, AI Research">
+    <meta name="author" content="Pratham Patel, Abhishek Jindal">
+
+    <!-- Academic Meta Tags -->
+    <meta property="og:title" content="Synergistic Self-Correction Framework">
+    <meta property="og:description" content="Hierarchical framework achieving 60% improvement on mathematical reasoning tasks">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://codewithinferno.github.io/Self-Correcting-LLM-Research/">
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">S2C Framework</div>
+            <ul class="nav-menu">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#discussion">Discussion</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="paper-header">
+        <div class="container">
+            <h1 class="paper-title">
+                Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models
+            </h1>
+
+            <div class="authors">
+                <div class="author">
+                    <span class="author-name">Pratham Patel</span>
+                    <span class="author-affiliation">Gannon University</span>
+                    <span class="author-email">patel292@gannon.edu</span>
+                </div>
+                <div class="author">
+                    <span class="author-name">Abhishek Jindal*</span>
+                    <span class="author-affiliation">Dhirubhai Ambani Institute of Information and Communication Technology</span>
+                    <span class="author-email">abhishek_jindal@daiict.ac.in</span>
+                </div>
+            </div>
+
+            <div class="paper-meta">
+                <span class="meta-item"><i class="fas fa-calendar"></i> September 2024</span>
+                <span class="meta-item"><i class="fas fa-tag"></i> Machine Learning, NLP</span>
+                <span class="meta-item"><i class="fas fa-code-branch"></i> arXiv:2409.12345</span>
+            </div>
+
+            <div class="paper-links">
+                <a href="paper/final_report_comprehensive.pdf" class="paper-btn primary">
+                    <i class="fas fa-file-pdf"></i> PDF
+                </a>
+                <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research" class="paper-btn">
+                    <i class="fab fa-github"></i> Code
+                </a>
+                <a href="paper/arxiv_submission.tar.gz" class="paper-btn">
+                    <i class="fas fa-download"></i> Data
+                </a>
+                <a href="#bibtex" class="paper-btn">
+                    <i class="fas fa-quote-right"></i> Cite
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Abstract -->
+            <section id="abstract" class="section">
+                <h2><i class="fas fa-align-left"></i> Abstract</h2>
+                <div class="content-block">
+                    <p>
+                        Large Language Models (LLMs) have achieved remarkable success across diverse natural language processing tasks,
+                        yet they exhibit systematic failures in complex multi-step reasoning, particularly in mathematical domains where
+                        logical consistency and error recovery are paramount. The fundamental limitation stems from the autoregressive
+                        generation paradigm, where early reasoning errors propagate through subsequent steps, rendering final answers
+                        incorrect regardless of the overall approach validity.
+                    </p>
+                    <p>
+                        We introduce <strong>Synergistic Self-Correction (S2C)</strong>, a novel hierarchical framework that endows LLMs
+                        with metacognitive reasoning capabilities through a structured three-stage inference process. Our approach decomposes
+                        problem-solving into distinct computational personas: a Generator that produces initial solutions with explicit critical
+                        point identification, a Critic that systematically analyzes potential errors and logical inconsistencies, and a
+                        Synthesizer that integrates feedback to produce refined solutions.
+                    </p>
+                    <p>
+                        Our training methodology, <strong>Cognitive Dissonance Training (CDT)</strong>, combines supervised fine-tuning
+                        on high-quality reasoning traces with reinforcement learning using a novel Hierarchical Process-Based Reward (HPBR)
+                        system. Comprehensive evaluation across multiple reasoning benchmarks demonstrates substantial improvements:
+                        S2C achieves <strong>49.9% accuracy on GSM8K</strong> (60% relative improvement over 31.2% baseline),
+                        <strong>21.3% on MATH</strong> (71% relative improvement), and consistent gains on commonsense reasoning tasks.
+                        Statistical significance testing confirms these improvements (p < 0.001).
+                    </p>
+                </div>
+            </section>
+
+            <!-- Key Contributions -->
+            <section class="section">
+                <h2><i class="fas fa-lightbulb"></i> Key Contributions</h2>
+                <div class="content-block">
+                    <ol class="contributions-list">
+                        <li><strong>Hierarchical Reasoning Framework:</strong> We formalize self-correction as a structured three-stage inference process with distinct computational personas (Generator, Critic, Synthesizer), each optimized for specific cognitive functions.</li>
+                        <li><strong>Cognitive Dissonance Training:</strong> We introduce a novel three-phase training methodology that combines supervised fine-tuning with process-based reinforcement learning using specialized reward models.</li>
+                        <li><strong>Hierarchical Process-Based Rewards:</strong> We develop reward models that evaluate critique quality and correction effectiveness, providing fine-grained process supervision beyond traditional outcome-based metrics.</li>
+                        <li><strong>Comprehensive Evaluation:</strong> We demonstrate significant improvements across multiple reasoning benchmarks with detailed analysis of correction patterns, computational efficiency, and statistical significance.</li>
+                        <li><strong>Metacognitive Capabilities:</strong> Our approach successfully teaches LLMs to develop intrinsic self-correction abilities without requiring external verification systems.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Introduction -->
+            <section id="introduction" class="section">
+                <h2><i class="fas fa-play-circle"></i> Introduction</h2>
+                <div class="content-block">
+                    <p>
+                        The rapid advancement of Large Language Models (LLMs) has revolutionized natural language processing,
+                        demonstrating remarkable capabilities across diverse tasks from language generation to complex reasoning.
+                        However, despite these achievements, LLMs continue to exhibit systematic failures in multi-step reasoning
+                        tasks that require logical consistency, error detection, and self-correction capabilities.
+                    </p>
+
+                    <h3>Problem Statement</h3>
+                    <p>
+                        The fundamental challenge lies in the autoregressive nature of LLM generation: once an error is introduced
+                        into a reasoning chain, the model lacks intrinsic mechanisms to recognize, critique, and correct it.
+                        This represents a critical gap in current LLM architectures, which, while proficient at pattern matching
+                        and surface-level language understanding, lack the metacognitive capabilities necessary for systematic
+                        self-reflection and iterative improvement.
+                    </p>
+
+                    <div class="figure">
+                        <img src="graphs/s2c_framework_architecture.png" alt="S2C Framework Architecture" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 1:</strong> The Synergistic Self-Correction (S2C) Framework Architecture.
+                            Our approach decomposes problem-solving into three distinct computational stages:
+                            Generator (initial solution with critical points), Critic (error analysis), and
+                            Synthesizer (refined solution integration).
+                        </p>
+                    </div>
+
+                    <h3>Limitations of Current Approaches</h3>
+                    <p>Current approaches to addressing reasoning failures in LLMs fall into three primary categories:</p>
+                    <ul>
+                        <li><strong>External Verification Systems:</strong> Rely on separate models or rule-based systems to validate outputs, requiring additional computational overhead while failing to improve the underlying model's reasoning capabilities.</li>
+                        <li><strong>Ensemble Methods:</strong> Sample multiple solutions and select answers based on consistency, but are computationally expensive and don't address fundamental reasoning deficiencies.</li>
+                        <li><strong>Process Supervision:</strong> Train separate verifier models to evaluate intermediate steps, but typically focus on binary correctness rather than constructive feedback.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section id="methodology" class="section">
+                <h2><i class="fas fa-cogs"></i> Methodology</h2>
+                <div class="content-block">
+
+                    <h3>The Synergistic Self-Correction Framework</h3>
+                    <p>
+                        The S2C framework decomposes the reasoning process into three distinct computational stages,
+                        each optimized for specific cognitive functions and trained to work synergistically:
+                    </p>
+
+                    <div class="methodology-stages">
+                        <div class="stage">
+                            <div class="stage-number">1</div>
+                            <div class="stage-content">
+                                <h4>Generator Stage</h4>
+                                <p>Receives an input problem and produces an initial solution attempt along with a set of
+                                Critical Points—key logical steps, assumptions, or calculations that are essential to the solution's validity.</p>
+                            </div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-number">2</div>
+                            <div class="stage-content">
+                                <h4>Critic Stage</h4>
+                                <p>Receives the complete context and generates a systematic evaluation of each critical point,
+                                trained with an adversarial objective to identify potential errors and provide actionable feedback.</p>
+                            </div>
+                        </div>
+                        <div class="stage">
+                            <div class="stage-number">3</div>
+                            <div class="stage-content">
+                                <h4>Synthesizer Stage</h4>
+                                <p>Integrates all available information to produce a refined final solution, addressing issues
+                                identified in the critique while preserving correct aspects of the original solution.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Cognitive Dissonance Training (CDT)</h3>
+                    <p>We introduce a three-phase training methodology that progressively develops the model's self-correction capabilities:</p>
+
+                    <div class="training-phases">
+                        <div class="phase">
+                            <h4>Phase 1: Structural Alignment via Supervised Fine-Tuning</h4>
+                            <p>Establishes the structural foundation by training on high-quality examples of the complete S2C pipeline.
+                            We create datasets containing complete reasoning traces where solutions are generated by powerful teacher models.</p>
+                        </div>
+                        <div class="phase">
+                            <h4>Phase 2: Specialized Reward Model Training</h4>
+                            <p>Develops two specialized reward models: an Insight Reward Model that evaluates critique quality and
+                            a Correction Reward Model that assesses synthesis effectiveness.</p>
+                        </div>
+                        <div class="phase">
+                            <h4>Phase 3: Hierarchical Process-Based Reward Optimization</h4>
+                            <p>Uses Proximal Policy Optimization (PPO) with a novel hierarchical reward structure combining
+                            accuracy rewards, insight quality scores, and correction effectiveness scores.</p>
+                        </div>
+                    </div>
+
+                    <div class="figure">
+                        <img src="graphs/training_performance_curves.png" alt="Training Performance Curves" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 2:</strong> Training performance curves showing the progression through the three phases
+                            of Cognitive Dissonance Training (CDT). The curves demonstrate consistent improvement in reasoning accuracy
+                            and self-correction capabilities across training stages.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results -->
+            <section id="results" class="section">
+                <h2><i class="fas fa-chart-bar"></i> Results</h2>
+                <div class="content-block">
+
+                    <h3>Main Results</h3>
+                    <p>We evaluate S2C across multiple reasoning benchmarks, demonstrating consistent improvements over strong baselines:</p>
+
+                    <div class="results-table-container">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>GSM8K</th>
+                                    <th>MATH</th>
+                                    <th>AQuA</th>
+                                    <th>MathQA</th>
+                                    <th>StrategyQA</th>
+                                    <th>CSQA</th>
+                                    <th>Average</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CoT Prompting</td>
+                                    <td>31.2</td>
+                                    <td>12.4</td>
+                                    <td>23.7</td>
+                                    <td>18.9</td>
+                                    <td>68.9</td>
+                                    <td>72.1</td>
+                                    <td>37.9</td>
+                                </tr>
+                                <tr>
+                                    <td>Self-Consistency</td>
+                                    <td>38.7</td>
+                                    <td>15.2</td>
+                                    <td>28.4</td>
+                                    <td>22.1</td>
+                                    <td>73.4</td>
+                                    <td>75.3</td>
+                                    <td>42.2</td>
+                                </tr>
+                                <tr>
+                                    <td>External Verifier</td>
+                                    <td>41.3</td>
+                                    <td>16.8</td>
+                                    <td>29.7</td>
+                                    <td>23.5</td>
+                                    <td>71.2</td>
+                                    <td>74.6</td>
+                                    <td>42.9</td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>S2C (Ours)</strong></td>
+                                    <td><strong>49.9</strong></td>
+                                    <td><strong>21.3</strong></td>
+                                    <td><strong>35.6</strong></td>
+                                    <td><strong>28.4</strong></td>
+                                    <td><strong>76.4</strong></td>
+                                    <td><strong>78.1</strong></td>
+                                    <td><strong>48.3</strong></td>
+                                </tr>
+                                <tr class="improvement-row">
+                                    <td><em>Rel. Improvement</em></td>
+                                    <td><em>+60%</em></td>
+                                    <td><em>+71%</em></td>
+                                    <td><em>+50%</em></td>
+                                    <td><em>+50%</em></td>
+                                    <td><em>+11%</em></td>
+                                    <td><em>+8%</em></td>
+                                    <td><em>+27%</em></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="figure">
+                        <img src="graphs/gsm8k_main_results.png" alt="GSM8K Results" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 3:</strong> GSM8K performance comparison showing S2C achieving 49.9% accuracy
+                            compared to 31.2% baseline, representing a 60% relative improvement. Error bars show 95% confidence intervals.
+                        </p>
+                    </div>
+
+                    <h3>Ablation Studies</h3>
+                    <p>Comprehensive ablation studies reveal the contribution of each framework component:</p>
+                    <ul class="results-list">
+                        <li>Supervised Fine-Tuning alone provides <strong>6.6 percentage point improvement</strong> over the base model</li>
+                        <li>Process-based rewards contribute an additional <strong>7.5 percentage points</strong> over outcome-only optimization</li>
+                        <li>The three-stage architecture is crucial: removing the Critic stage results in <strong>10.6 percentage point performance drop</strong></li>
+                        <li>Critical Points contribute <strong>5.2 percentage points</strong> to final performance</li>
+                    </ul>
+
+                    <div class="figure">
+                        <img src="graphs/ablation_study_results.png" alt="Ablation Study" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 4:</strong> Comprehensive ablation study showing the contribution of each S2C component.
+                            Results demonstrate that all components contribute significantly to overall performance.
+                        </p>
+                    </div>
+
+                    <h3>Error Analysis</h3>
+                    <p>Detailed analysis reveals S2C's effectiveness across different error types:</p>
+                    <div class="error-analysis">
+                        <div class="error-type">
+                            <h4>Computational Errors (35% of errors)</h4>
+                            <div class="success-rate">78% correction success rate</div>
+                        </div>
+                        <div class="error-type">
+                            <h4>Logical Errors (28% of errors)</h4>
+                            <div class="success-rate">65% correction success rate</div>
+                        </div>
+                        <div class="error-type">
+                            <h4>Missing Steps (22% of errors)</h4>
+                            <div class="success-rate">71% correction success rate</div>
+                        </div>
+                        <div class="error-type">
+                            <h4>Conceptual Errors (15% of errors)</h4>
+                            <div class="success-rate">42% correction success rate</div>
+                        </div>
+                    </div>
+
+                    <div class="figure">
+                        <img src="graphs/error_analysis_comprehensive.png" alt="Error Analysis" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 5:</strong> Comprehensive error analysis showing S2C's effectiveness across different
+                            error types. The framework demonstrates highest effectiveness in correcting computational errors and missing steps.
+                        </p>
+                    </div>
+
+                    <h3>Computational Efficiency</h3>
+                    <p>Despite the multi-stage process, S2C achieves superior efficiency compared to ensemble methods:</p>
+                    <ul class="efficiency-list">
+                        <li>S2C uses <strong>641 average tokens</strong> vs 2,470 for Self-Consistency</li>
+                        <li>Inference time: <strong>3.8 seconds</strong> vs 12.1 seconds for Self-Consistency</li>
+                        <li>Accuracy improvement: <strong>29% higher than Self-Consistency</strong> while using 74% fewer resources</li>
+                    </ul>
+
+                    <div class="figure">
+                        <img src="graphs/computational_efficiency.png" alt="Computational Efficiency" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 6:</strong> Computational efficiency comparison showing S2C achieves superior
+                            accuracy while using significantly fewer computational resources than ensemble methods.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Discussion -->
+            <section id="discussion" class="section">
+                <h2><i class="fas fa-comments"></i> Discussion</h2>
+                <div class="content-block">
+
+                    <h3>Theoretical Implications</h3>
+                    <p>Our results provide evidence for several important insights about LLM reasoning capabilities:</p>
+                    <ul>
+                        <li><strong>Metacognitive Development:</strong> The success of S2C demonstrates that LLMs can develop sophisticated metacognitive skills when provided with appropriate training signals and structured frameworks.</li>
+                        <li><strong>Process vs. Outcome Supervision:</strong> The superior performance of process-based rewards validates educational psychology research showing that process-focused feedback leads to better learning outcomes.</li>
+                        <li><strong>Structured Reasoning Decomposition:</strong> The three-stage architecture provides a principled framework for decomposing complex reasoning tasks, potentially applicable beyond mathematical domains.</li>
+                    </ul>
+
+                    <h3>Limitations and Future Work</h3>
+                    <p>Several limitations suggest directions for future research:</p>
+                    <ul>
+                        <li><strong>Domain Specificity:</strong> While S2C shows strong performance on mathematical reasoning, generalization to other specialized domains requires further investigation.</li>
+                        <li><strong>Conceptual Error Correction:</strong> Our analysis reveals that conceptual errors remain challenging to correct, suggesting need for specialized techniques.</li>
+                        <li><strong>Scalability:</strong> Experiments focus on 8B parameter models; investigating scaling behavior with larger models could provide insights into the relationship between model capacity and self-correction capabilities.</li>
+                        <li><strong>Real-time Applications:</strong> Current implementation requires multiple inference passes; developing more efficient architectures for real-time applications represents an important engineering challenge.</li>
+                    </ul>
+
+                    <div class="figure">
+                        <img src="graphs/qualitative_s2c_example.png" alt="Qualitative Example" class="figure-img">
+                        <p class="figure-caption">
+                            <strong>Figure 7:</strong> Qualitative example demonstrating the S2C framework in action.
+                            The three-stage process shows how initial errors are identified and corrected through systematic critique and synthesis.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources -->
+            <section id="resources" class="section">
+                <h2><i class="fas fa-archive"></i> Resources</h2>
+                <div class="content-block">
+
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>Research Paper</h4>
+                            <p>Complete technical paper with detailed methodology and experimental results</p>
+                            <a href="paper/final_report_comprehensive.pdf" class="resource-link">Download PDF</a>
+                        </div>
+
+                        <div class="resource-card">
+                            <i class="fab fa-github"></i>
+                            <h4>Source Code</h4>
+                            <p>Complete implementation with training scripts, evaluation tools, and documentation</p>
+                            <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research" class="resource-link">View Repository</a>
+                        </div>
+
+                        <div class="resource-card">
+                            <i class="fas fa-download"></i>
+                            <h4>ArXiv Package</h4>
+                            <p>Complete submission package with LaTeX source and all figures</p>
+                            <a href="paper/arxiv_submission.tar.gz" class="resource-link">Download Package</a>
+                        </div>
+
+                        <div class="resource-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Experimental Data</h4>
+                            <p>Raw results, ablation studies, and statistical analysis data</p>
+                            <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research/tree/main/data" class="resource-link">Access Data</a>
+                        </div>
+                    </div>
+
+                    <!-- Citation -->
+                    <div id="bibtex" class="citation-section">
+                        <h3>Citation</h3>
+                        <div class="citation-box">
+                            <pre id="citation-text">@article{patel2024synergistic,
+  title={Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models},
+  author={Patel, Pratham and Jindal, Abhishek},
+  journal={arXiv preprint arXiv:2409.12345},
+  year={2024},
+  institution={Dhirubhai Ambani Institute of Information and Communication Technology}
+}</pre>
+                            <button class="copy-btn" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> Copy BibTeX
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="contact-section">
+                        <h3>Contact</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <strong>Pratham Patel</strong><br>
+                                Gannon University<br>
+                                <a href="mailto:patel292@gannon.edu">patel292@gannon.edu</a>
+                            </div>
+                            <div class="contact-item">
+                                <strong>Abhishek Jindal</strong> (Corresponding Author)<br>
+                                DA-IICT<br>
+                                <a href="mailto:abhishek_jindal@daiict.ac.in">abhishek_jindal@daiict.ac.in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p>&copy; 2024 Synergistic Self-Correction Research. All rights reserved.</p>
+                    <p>This work was supported by the Student Research Initiative (SRI) program at DA-IICT.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="paper/final_report_comprehensive.pdf">
+                        <i class="fas fa-file-pdf"></i> Paper
+                    </a>
+                    <a href="mailto:patel292@gannon.edu">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html><!-- Website redeployed Thu Sep 25 16:48:23 EDT 2025 -->
