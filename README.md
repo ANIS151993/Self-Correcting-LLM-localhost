@@ -42,6 +42,13 @@ Input Problem → Generator → Critic → Synthesizer → Final Answer
 2. **🔍 Critic**: Systematically analyzes potential errors and logical inconsistencies
 3. **⚡ Synthesizer**: Integrates feedback to produce refined solutions
 
+### 📊 Framework Architecture
+
+<div align="center">
+  <img src="graphs/s2c_framework_architecture.png" alt="S2C Framework Architecture" width="80%">
+  <p><em>Figure 1: The Synergistic Self-Correction (S2C) Framework Architecture showing the three-stage pipeline</em></p>
+</div>
+
 ### 🏋️ Training Methodology: Cognitive Dissonance Training (CDT)
 
 Our novel three-phase training approach:
@@ -66,8 +73,23 @@ Our novel three-phase training approach:
 ### 📊 Visualizations
 
 <div align="center">
-  <img src="graphs/gsm8k_main_results.pdf" alt="GSM8K Results" width="45%">
-  <img src="graphs/training_performance_curves.pdf" alt="Training Curves" width="45%">
+
+#### Main Results
+<img src="graphs/gsm8k_main_results.png" alt="GSM8K Results" width="45%">
+<img src="graphs/training_performance_curves.png" alt="Training Performance Curves" width="45%">
+
+#### Detailed Analysis
+<img src="graphs/ablation_study_results.png" alt="Ablation Study Results" width="45%">
+<img src="graphs/error_analysis_comprehensive.png" alt="Error Analysis" width="45%">
+
+#### Qualitative Example
+<img src="graphs/qualitative_s2c_example.png" alt="S2C Qualitative Example" width="80%">
+
+#### Computational Efficiency
+<img src="graphs/computational_efficiency.png" alt="Computational Efficiency" width="60%">
+
+<p><em>All visualizations demonstrate the effectiveness of the S2C framework across different metrics and benchmarks</em></p>
+
 </div>
 
 ---
