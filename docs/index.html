@@ -12,11 +12,291 @@
     <meta property="og:title" content="Synergistic Self-Correction Framework">
     <meta property="og:description" content="Hierarchical framework achieving 60% improvement on mathematical reasoning tasks">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://codewithinferno.github.io/Self-Correcting-LLM-Research/">
+    <meta property="og:url" content="https://anis151993.github.io/Self-Correcting-LLM-localhost/">
 
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Access Gate Styles */
+        .access-gate-banner {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border: 2px solid var(--primary-color, #2c5282);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .access-gate-banner h3 {
+            color: var(--primary-color, #2c5282);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .access-gate-banner > p {
+            color: var(--text-secondary, #666);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+        .access-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .access-step-card {
+            background: var(--background-color, white);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 10px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .access-step-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .access-step-card .step-num {
+            display: inline-block;
+            background: var(--primary-color, #2c5282);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            line-height: 32px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        .access-step-card h4 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: var(--text-primary, #333);
+        }
+        .access-step-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted, #888);
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .step-action-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .step-action-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+            color: white;
+            text-decoration: none;
+        }
+        .btn-gh { background: #24292e; }
+        .btn-yt { background: #ff0000; }
+        .btn-mail { background: var(--primary-color, #2c5282); }
+
+        .password-unlock-area {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed var(--border-color, #ccd);
+        }
+        .password-unlock-area h4 {
+            color: var(--primary-color, #2c5282);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        .password-unlock-area .hint-text {
+            color: var(--text-muted, #888);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .pw-form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .pw-form input[type="password"] {
+            padding: 12px 18px;
+            border: 2px solid var(--border-color, #dde);
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 280px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--background-color, white);
+            color: var(--text-primary, #333);
+        }
+        .pw-form input[type="password"]:focus {
+            border-color: var(--primary-color, #2c5282);
+        }
+        .pw-form button {
+            padding: 12px 28px;
+            background: var(--primary-color, #2c5282);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pw-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 82, 130, 0.3);
+        }
+        .pw-error {
+            color: #e53e3e;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+        .pw-success {
+            color: #38a169;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+        .pdf-notice {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px 18px;
+            color: #856404;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* Gated content hidden by default */
+        .gated-content {
+            display: none;
+        }
+        .gated-content.unlocked {
+            display: block;
+        }
+
+        /* Gated header links hidden by default */
+        .paper-links .gated-link {
+            display: none;
+        }
+        .paper-links .gated-link.unlocked {
+            display: inline-flex;
+        }
+
+        @media (max-width: 768px) {
+            .access-steps-grid {
+                grid-template-columns: 1fr;
+            }
+            .pw-form input[type="password"] {
+                width: 100%;
+            }
+            .video-container iframe {
+                height: 250px;
+            }
+        }
+
+        /* Video Overview Styles */
+        .video-overview-wrapper {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+        .video-overview-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(44, 82, 130, 0.15) 0%, transparent 60%);
+            animation: vid-pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes vid-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .video-overview-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .video-overview-header h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .video-overview-header p {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.95rem;
+        }
+        .video-container {
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+            border: 2px solid rgba(44, 82, 130, 0.3);
+        }
+        .video-container iframe {
+            display: block;
+            width: 100%;
+            height: 480px;
+            border: none;
+        }
+        .video-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+        .video-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-actions a:hover {
+            transform: translateY(-2px);
+        }
+        .vid-yt-btn {
+            background: #ff0000;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+        }
+        .vid-yt-btn:hover {
+            box-shadow: 0 6px 20px rgba(255,0,0,0.5);
+            color: white;
+        }
+        .vid-gh-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .vid-gh-btn:hover {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -25,10 +305,8 @@
             <div class="nav-brand">S2C Framework</div>
             <ul class="nav-menu">
                 <li><a href="#abstract">Abstract</a></li>
-                <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#methodology">Methodology</a></li>
-                <li><a href="#results">Results</a></li>
-                <li><a href="#discussion">Discussion</a></li>
+                <li><a href="#video-overview">Video</a></li>
+                <li><a href="#access-gate">Full Paper</a></li>
                 <li><a href="#resources">Resources</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle">
@@ -64,13 +342,20 @@
             </div>
 
             <div class="paper-links">
-                <a href="paper/final_report_comprehensive.pdf" class="paper-btn primary">
+                <!-- PDF and Data links are gated -->
+                <a href="#access-gate" class="paper-btn primary" onclick="scrollToGate(event)">
+                    <i class="fas fa-lock"></i> PDF (Restricted)
+                </a>
+                <a href="paper/final_report_comprehensive.pdf" class="paper-btn primary gated-link" id="header-pdf-link">
                     <i class="fas fa-file-pdf"></i> PDF
                 </a>
-                <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research" class="paper-btn">
+                <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" class="paper-btn">
                     <i class="fab fa-github"></i> Code
                 </a>
-                <a href="paper/arxiv_submission.tar.gz" class="paper-btn">
+                <a href="#access-gate" class="paper-btn" onclick="scrollToGate(event)">
+                    <i class="fas fa-lock"></i> Data (Restricted)
+                </a>
+                <a href="paper/arxiv_submission.tar.gz" class="paper-btn gated-link" id="header-data-link">
                     <i class="fas fa-download"></i> Data
                 </a>
                 <a href="#bibtex" class="paper-btn">
@@ -84,7 +369,7 @@
     <main class="main-content">
         <div class="container">
 
-            <!-- Abstract -->
+            <!-- Abstract (Publicly Visible) -->
             <section id="abstract" class="section">
                 <h2><i class="fas fa-align-left"></i> Abstract</h2>
                 <div class="content-block">
@@ -108,386 +393,468 @@
                         system. Comprehensive evaluation across multiple reasoning benchmarks demonstrates substantial improvements:
                         S2C achieves <strong>49.9% accuracy on GSM8K</strong> (60% relative improvement over 31.2% baseline),
                         <strong>21.3% on MATH</strong> (71% relative improvement), and consistent gains on commonsense reasoning tasks.
-                        Statistical significance testing confirms these improvements (p < 0.001).
+                        Statistical significance testing confirms these improvements (p &lt; 0.001).
                     </p>
                 </div>
             </section>
 
-            <!-- Key Contributions -->
-            <section class="section">
-                <h2><i class="fas fa-lightbulb"></i> Key Contributions</h2>
+            <!-- Video Overview (Publicly Visible) -->
+            <section id="video-overview" class="section">
+                <h2><i class="fas fa-play-circle"></i> Video Overview</h2>
                 <div class="content-block">
-                    <ol class="contributions-list">
-                        <li><strong>Hierarchical Reasoning Framework:</strong> We formalize self-correction as a structured three-stage inference process with distinct computational personas (Generator, Critic, Synthesizer), each optimized for specific cognitive functions.</li>
-                        <li><strong>Cognitive Dissonance Training:</strong> We introduce a novel three-phase training methodology that combines supervised fine-tuning with process-based reinforcement learning using specialized reward models.</li>
-                        <li><strong>Hierarchical Process-Based Rewards:</strong> We develop reward models that evaluate critique quality and correction effectiveness, providing fine-grained process supervision beyond traditional outcome-based metrics.</li>
-                        <li><strong>Comprehensive Evaluation:</strong> We demonstrate significant improvements across multiple reasoning benchmarks with detailed analysis of correction patterns, computational efficiency, and statistical significance.</li>
-                        <li><strong>Metacognitive Capabilities:</strong> Our approach successfully teaches LLMs to develop intrinsic self-correction abilities without requiring external verification systems.</li>
-                    </ol>
-                </div>
-            </section>
-
-            <!-- Introduction -->
-            <section id="introduction" class="section">
-                <h2><i class="fas fa-play-circle"></i> Introduction</h2>
-                <div class="content-block">
-                    <p>
-                        The rapid advancement of Large Language Models (LLMs) has revolutionized natural language processing,
-                        demonstrating remarkable capabilities across diverse tasks from language generation to complex reasoning.
-                        However, despite these achievements, LLMs continue to exhibit systematic failures in multi-step reasoning
-                        tasks that require logical consistency, error detection, and self-correction capabilities.
-                    </p>
-
-                    <h3>Problem Statement</h3>
-                    <p>
-                        The fundamental challenge lies in the autoregressive nature of LLM generation: once an error is introduced
-                        into a reasoning chain, the model lacks intrinsic mechanisms to recognize, critique, and correct it.
-                        This represents a critical gap in current LLM architectures, which, while proficient at pattern matching
-                        and surface-level language understanding, lack the metacognitive capabilities necessary for systematic
-                        self-reflection and iterative improvement.
-                    </p>
-
-                    <div class="figure">
-                        <img src="graphs/s2c_framework_architecture.png" alt="S2C Framework Architecture" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 1:</strong> The Synergistic Self-Correction (S2C) Framework Architecture.
-                            Our approach decomposes problem-solving into three distinct computational stages:
-                            Generator (initial solution with critical points), Critic (error analysis), and
-                            Synthesizer (refined solution integration).
-                        </p>
+                    <div class="video-overview-wrapper">
+                        <div class="video-overview-header">
+                            <h3>Research Walkthrough</h3>
+                            <p>Watch a detailed explanation of the S2C framework, methodology, and key results</p>
+                        </div>
+                        <div class="video-container">
+                            <iframe
+                                src="https://www.youtube.com/embed/9ePEgLc8maQ?rel=0&modestbranding=1"
+                                title="S2C Framework - Research Overview"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-actions">
+                            <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="vid-yt-btn">
+                                <i class="fab fa-youtube"></i> Watch on YouTube
+                            </a>
+                            <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" target="_blank" rel="noopener" class="vid-gh-btn">
+                                <i class="fab fa-github"></i> Star on GitHub
+                            </a>
+                        </div>
                     </div>
-
-                    <h3>Limitations of Current Approaches</h3>
-                    <p>Current approaches to addressing reasoning failures in LLMs fall into three primary categories:</p>
-                    <ul>
-                        <li><strong>External Verification Systems:</strong> Rely on separate models or rule-based systems to validate outputs, requiring additional computational overhead while failing to improve the underlying model's reasoning capabilities.</li>
-                        <li><strong>Ensemble Methods:</strong> Sample multiple solutions and select answers based on consistency, but are computationally expensive and don't address fundamental reasoning deficiencies.</li>
-                        <li><strong>Process Supervision:</strong> Train separate verifier models to evaluate intermediate steps, but typically focus on binary correctness rather than constructive feedback.</li>
-                    </ul>
                 </div>
             </section>
 
-            <!-- Methodology -->
-            <section id="methodology" class="section">
-                <h2><i class="fas fa-cogs"></i> Methodology</h2>
+            <!-- Access Gate Section -->
+            <section id="access-gate" class="section">
+                <h2><i class="fas fa-lock"></i> Access Full Paper</h2>
                 <div class="content-block">
+                    <div class="access-gate-banner" id="access-gate-banner">
+                        <h3>Full Paper Access Restricted</h3>
+                        <p>The Abstract above is publicly available. To read the full paper, download PDFs, or access detailed sections (Introduction, Methodology, Results, Discussion), please complete the following steps and enter the access password.</p>
 
-                    <h3>The Synergistic Self-Correction Framework</h3>
-                    <p>
-                        The S2C framework decomposes the reasoning process into three distinct computational stages,
-                        each optimized for specific cognitive functions and trained to work synergistically:
-                    </p>
-
-                    <div class="methodology-stages">
-                        <div class="stage">
-                            <div class="stage-number">1</div>
-                            <div class="stage-content">
-                                <h4>Generator Stage</h4>
-                                <p>Receives an input problem and produces an initial solution attempt along with a set of
-                                Critical Points—key logical steps, assumptions, or calculations that are essential to the solution's validity.</p>
+                        <div class="access-steps-grid">
+                            <div class="access-step-card">
+                                <span class="step-num">1</span>
+                                <h4>Follow on GitHub</h4>
+                                <p>Follow the repository and star it to stay updated with the latest research.</p>
+                                <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" target="_blank" rel="noopener" class="step-action-btn btn-gh">Follow on GitHub</a>
+                            </div>
+                            <div class="access-step-card">
+                                <span class="step-num">2</span>
+                                <h4>Subscribe on YouTube</h4>
+                                <p>Subscribe to our channel for video explanations and research walkthroughs.</p>
+                                <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="step-action-btn btn-yt">Subscribe on YouTube</a>
+                            </div>
+                            <div class="access-step-card">
+                                <span class="step-num">3</span>
+                                <h4>Request Permission</h4>
+                                <p>Send an email requesting access. Include your name and institution.</p>
+                                <a href="mailto:engr.aanis@gmail.com?subject=Request%20for%20Full%20Paper%20Access%20-%20S2C%20Framework&body=Hi%2C%0A%0AI%20would%20like%20to%20request%20access%20to%20the%20full%20S2C%20research%20paper.%0A%0AName%3A%20%0AInstitution%3A%20%0APurpose%3A%20%0A%0AThank%20you." class="step-action-btn btn-mail">Send Request Email</a>
                             </div>
                         </div>
-                        <div class="stage">
-                            <div class="stage-number">2</div>
-                            <div class="stage-content">
-                                <h4>Critic Stage</h4>
-                                <p>Receives the complete context and generates a systematic evaluation of each critical point,
-                                trained with an adversarial objective to identify potential errors and provide actionable feedback.</p>
+
+                        <div class="password-unlock-area">
+                            <h4>Enter Access Password</h4>
+                            <p class="hint-text">After completing the steps above and receiving your password, enter it below to unlock all paper content.</p>
+                            <div class="pw-form">
+                                <input type="password" id="docs-access-password" placeholder="Enter access password" autocomplete="off">
+                                <button onclick="verifyDocsPassword()">Unlock Full Paper</button>
+                            </div>
+                            <p class="pw-error" id="docs-pw-error">Incorrect password. Please verify you have completed all steps and try again.</p>
+                            <p class="pw-success" id="docs-pw-success">Access granted! All sections are now unlocked below.</p>
+                        </div>
+
+                        <div class="pdf-notice">
+                            <strong>Note:</strong> Downloaded PDF files are also password-protected. Use the same access password to open them.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GATED CONTENT: Everything below is hidden until password is entered -->
+            <div class="gated-content" id="gated-content">
+
+                <!-- Key Contributions -->
+                <section class="section">
+                    <h2><i class="fas fa-lightbulb"></i> Key Contributions</h2>
+                    <div class="content-block">
+                        <ol class="contributions-list">
+                            <li><strong>Hierarchical Reasoning Framework:</strong> We formalize self-correction as a structured three-stage inference process with distinct computational personas (Generator, Critic, Synthesizer), each optimized for specific cognitive functions.</li>
+                            <li><strong>Cognitive Dissonance Training:</strong> We introduce a novel three-phase training methodology that combines supervised fine-tuning with process-based reinforcement learning using specialized reward models.</li>
+                            <li><strong>Hierarchical Process-Based Rewards:</strong> We develop reward models that evaluate critique quality and correction effectiveness, providing fine-grained process supervision beyond traditional outcome-based metrics.</li>
+                            <li><strong>Comprehensive Evaluation:</strong> We demonstrate significant improvements across multiple reasoning benchmarks with detailed analysis of correction patterns, computational efficiency, and statistical significance.</li>
+                            <li><strong>Metacognitive Capabilities:</strong> Our approach successfully teaches LLMs to develop intrinsic self-correction abilities without requiring external verification systems.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section">
+                    <h2><i class="fas fa-play-circle"></i> Introduction</h2>
+                    <div class="content-block">
+                        <p>
+                            The rapid advancement of Large Language Models (LLMs) has revolutionized natural language processing,
+                            demonstrating remarkable capabilities across diverse tasks from language generation to complex reasoning.
+                            However, despite these achievements, LLMs continue to exhibit systematic failures in multi-step reasoning
+                            tasks that require logical consistency, error detection, and self-correction capabilities.
+                        </p>
+
+                        <h3>Problem Statement</h3>
+                        <p>
+                            The fundamental challenge lies in the autoregressive nature of LLM generation: once an error is introduced
+                            into a reasoning chain, the model lacks intrinsic mechanisms to recognize, critique, and correct it.
+                            This represents a critical gap in current LLM architectures, which, while proficient at pattern matching
+                            and surface-level language understanding, lack the metacognitive capabilities necessary for systematic
+                            self-reflection and iterative improvement.
+                        </p>
+
+                        <div class="figure">
+                            <img src="graphs/s2c_framework_architecture.png" alt="S2C Framework Architecture" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 1:</strong> The Synergistic Self-Correction (S2C) Framework Architecture.
+                                Our approach decomposes problem-solving into three distinct computational stages:
+                                Generator (initial solution with critical points), Critic (error analysis), and
+                                Synthesizer (refined solution integration).
+                            </p>
+                        </div>
+
+                        <h3>Limitations of Current Approaches</h3>
+                        <p>Current approaches to addressing reasoning failures in LLMs fall into three primary categories:</p>
+                        <ul>
+                            <li><strong>External Verification Systems:</strong> Rely on separate models or rule-based systems to validate outputs, requiring additional computational overhead while failing to improve the underlying model's reasoning capabilities.</li>
+                            <li><strong>Ensemble Methods:</strong> Sample multiple solutions and select answers based on consistency, but are computationally expensive and don't address fundamental reasoning deficiencies.</li>
+                            <li><strong>Process Supervision:</strong> Train separate verifier models to evaluate intermediate steps, but typically focus on binary correctness rather than constructive feedback.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Methodology -->
+                <section id="methodology" class="section">
+                    <h2><i class="fas fa-cogs"></i> Methodology</h2>
+                    <div class="content-block">
+
+                        <h3>The Synergistic Self-Correction Framework</h3>
+                        <p>
+                            The S2C framework decomposes the reasoning process into three distinct computational stages,
+                            each optimized for specific cognitive functions and trained to work synergistically:
+                        </p>
+
+                        <div class="methodology-stages">
+                            <div class="stage">
+                                <div class="stage-number">1</div>
+                                <div class="stage-content">
+                                    <h4>Generator Stage</h4>
+                                    <p>Receives an input problem and produces an initial solution attempt along with a set of
+                                    Critical Points&#8212;key logical steps, assumptions, or calculations that are essential to the solution's validity.</p>
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-number">2</div>
+                                <div class="stage-content">
+                                    <h4>Critic Stage</h4>
+                                    <p>Receives the complete context and generates a systematic evaluation of each critical point,
+                                    trained with an adversarial objective to identify potential errors and provide actionable feedback.</p>
+                                </div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-number">3</div>
+                                <div class="stage-content">
+                                    <h4>Synthesizer Stage</h4>
+                                    <p>Integrates all available information to produce a refined final solution, addressing issues
+                                    identified in the critique while preserving correct aspects of the original solution.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="stage">
-                            <div class="stage-number">3</div>
-                            <div class="stage-content">
-                                <h4>Synthesizer Stage</h4>
-                                <p>Integrates all available information to produce a refined final solution, addressing issues
-                                identified in the critique while preserving correct aspects of the original solution.</p>
+
+                        <h3>Cognitive Dissonance Training (CDT)</h3>
+                        <p>We introduce a three-phase training methodology that progressively develops the model's self-correction capabilities:</p>
+
+                        <div class="training-phases">
+                            <div class="phase">
+                                <h4>Phase 1: Structural Alignment via Supervised Fine-Tuning</h4>
+                                <p>Establishes the structural foundation by training on high-quality examples of the complete S2C pipeline.
+                                We create datasets containing complete reasoning traces where solutions are generated by powerful teacher models.</p>
+                            </div>
+                            <div class="phase">
+                                <h4>Phase 2: Specialized Reward Model Training</h4>
+                                <p>Develops two specialized reward models: an Insight Reward Model that evaluates critique quality and
+                                a Correction Reward Model that assesses synthesis effectiveness.</p>
+                            </div>
+                            <div class="phase">
+                                <h4>Phase 3: Hierarchical Process-Based Reward Optimization</h4>
+                                <p>Uses Proximal Policy Optimization (PPO) with a novel hierarchical reward structure combining
+                                accuracy rewards, insight quality scores, and correction effectiveness scores.</p>
                             </div>
                         </div>
-                    </div>
 
-                    <h3>Cognitive Dissonance Training (CDT)</h3>
-                    <p>We introduce a three-phase training methodology that progressively develops the model's self-correction capabilities:</p>
-
-                    <div class="training-phases">
-                        <div class="phase">
-                            <h4>Phase 1: Structural Alignment via Supervised Fine-Tuning</h4>
-                            <p>Establishes the structural foundation by training on high-quality examples of the complete S2C pipeline.
-                            We create datasets containing complete reasoning traces where solutions are generated by powerful teacher models.</p>
-                        </div>
-                        <div class="phase">
-                            <h4>Phase 2: Specialized Reward Model Training</h4>
-                            <p>Develops two specialized reward models: an Insight Reward Model that evaluates critique quality and
-                            a Correction Reward Model that assesses synthesis effectiveness.</p>
-                        </div>
-                        <div class="phase">
-                            <h4>Phase 3: Hierarchical Process-Based Reward Optimization</h4>
-                            <p>Uses Proximal Policy Optimization (PPO) with a novel hierarchical reward structure combining
-                            accuracy rewards, insight quality scores, and correction effectiveness scores.</p>
+                        <div class="figure">
+                            <img src="graphs/training_performance_curves.png" alt="Training Performance Curves" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 2:</strong> Training performance curves showing the progression through the three phases
+                                of Cognitive Dissonance Training (CDT). The curves demonstrate consistent improvement in reasoning accuracy
+                                and self-correction capabilities across training stages.
+                            </p>
                         </div>
                     </div>
+                </section>
 
-                    <div class="figure">
-                        <img src="graphs/training_performance_curves.png" alt="Training Performance Curves" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 2:</strong> Training performance curves showing the progression through the three phases
-                            of Cognitive Dissonance Training (CDT). The curves demonstrate consistent improvement in reasoning accuracy
-                            and self-correction capabilities across training stages.
-                        </p>
-                    </div>
-                </div>
-            </section>
+                <!-- Results -->
+                <section id="results" class="section">
+                    <h2><i class="fas fa-chart-bar"></i> Results</h2>
+                    <div class="content-block">
 
-            <!-- Results -->
-            <section id="results" class="section">
-                <h2><i class="fas fa-chart-bar"></i> Results</h2>
-                <div class="content-block">
+                        <h3>Main Results</h3>
+                        <p>We evaluate S2C across multiple reasoning benchmarks, demonstrating consistent improvements over strong baselines:</p>
 
-                    <h3>Main Results</h3>
-                    <p>We evaluate S2C across multiple reasoning benchmarks, demonstrating consistent improvements over strong baselines:</p>
-
-                    <div class="results-table-container">
-                        <table class="results-table">
-                            <thead>
-                                <tr>
-                                    <th>Method</th>
-                                    <th>GSM8K</th>
-                                    <th>MATH</th>
-                                    <th>AQuA</th>
-                                    <th>MathQA</th>
-                                    <th>StrategyQA</th>
-                                    <th>CSQA</th>
-                                    <th>Average</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CoT Prompting</td>
-                                    <td>31.2</td>
-                                    <td>12.4</td>
-                                    <td>23.7</td>
-                                    <td>18.9</td>
-                                    <td>68.9</td>
-                                    <td>72.1</td>
-                                    <td>37.9</td>
-                                </tr>
-                                <tr>
-                                    <td>Self-Consistency</td>
-                                    <td>38.7</td>
-                                    <td>15.2</td>
-                                    <td>28.4</td>
-                                    <td>22.1</td>
-                                    <td>73.4</td>
-                                    <td>75.3</td>
-                                    <td>42.2</td>
-                                </tr>
-                                <tr>
-                                    <td>External Verifier</td>
-                                    <td>41.3</td>
-                                    <td>16.8</td>
-                                    <td>29.7</td>
-                                    <td>23.5</td>
-                                    <td>71.2</td>
-                                    <td>74.6</td>
-                                    <td>42.9</td>
-                                </tr>
-                                <tr class="highlight-row">
-                                    <td><strong>S2C (Ours)</strong></td>
-                                    <td><strong>49.9</strong></td>
-                                    <td><strong>21.3</strong></td>
-                                    <td><strong>35.6</strong></td>
-                                    <td><strong>28.4</strong></td>
-                                    <td><strong>76.4</strong></td>
-                                    <td><strong>78.1</strong></td>
-                                    <td><strong>48.3</strong></td>
-                                </tr>
-                                <tr class="improvement-row">
-                                    <td><em>Rel. Improvement</em></td>
-                                    <td><em>+60%</em></td>
-                                    <td><em>+71%</em></td>
-                                    <td><em>+50%</em></td>
-                                    <td><em>+50%</em></td>
-                                    <td><em>+11%</em></td>
-                                    <td><em>+8%</em></td>
-                                    <td><em>+27%</em></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="figure">
-                        <img src="graphs/gsm8k_main_results.png" alt="GSM8K Results" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 3:</strong> GSM8K performance comparison showing S2C achieving 49.9% accuracy
-                            compared to 31.2% baseline, representing a 60% relative improvement. Error bars show 95% confidence intervals.
-                        </p>
-                    </div>
-
-                    <h3>Ablation Studies</h3>
-                    <p>Comprehensive ablation studies reveal the contribution of each framework component:</p>
-                    <ul class="results-list">
-                        <li>Supervised Fine-Tuning alone provides <strong>6.6 percentage point improvement</strong> over the base model</li>
-                        <li>Process-based rewards contribute an additional <strong>7.5 percentage points</strong> over outcome-only optimization</li>
-                        <li>The three-stage architecture is crucial: removing the Critic stage results in <strong>10.6 percentage point performance drop</strong></li>
-                        <li>Critical Points contribute <strong>5.2 percentage points</strong> to final performance</li>
-                    </ul>
-
-                    <div class="figure">
-                        <img src="graphs/ablation_study_results.png" alt="Ablation Study" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 4:</strong> Comprehensive ablation study showing the contribution of each S2C component.
-                            Results demonstrate that all components contribute significantly to overall performance.
-                        </p>
-                    </div>
-
-                    <h3>Error Analysis</h3>
-                    <p>Detailed analysis reveals S2C's effectiveness across different error types:</p>
-                    <div class="error-analysis">
-                        <div class="error-type">
-                            <h4>Computational Errors (35% of errors)</h4>
-                            <div class="success-rate">78% correction success rate</div>
-                        </div>
-                        <div class="error-type">
-                            <h4>Logical Errors (28% of errors)</h4>
-                            <div class="success-rate">65% correction success rate</div>
-                        </div>
-                        <div class="error-type">
-                            <h4>Missing Steps (22% of errors)</h4>
-                            <div class="success-rate">71% correction success rate</div>
-                        </div>
-                        <div class="error-type">
-                            <h4>Conceptual Errors (15% of errors)</h4>
-                            <div class="success-rate">42% correction success rate</div>
-                        </div>
-                    </div>
-
-                    <div class="figure">
-                        <img src="graphs/error_analysis_comprehensive.png" alt="Error Analysis" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 5:</strong> Comprehensive error analysis showing S2C's effectiveness across different
-                            error types. The framework demonstrates highest effectiveness in correcting computational errors and missing steps.
-                        </p>
-                    </div>
-
-                    <h3>Computational Efficiency</h3>
-                    <p>Despite the multi-stage process, S2C achieves superior efficiency compared to ensemble methods:</p>
-                    <ul class="efficiency-list">
-                        <li>S2C uses <strong>641 average tokens</strong> vs 2,470 for Self-Consistency</li>
-                        <li>Inference time: <strong>3.8 seconds</strong> vs 12.1 seconds for Self-Consistency</li>
-                        <li>Accuracy improvement: <strong>29% higher than Self-Consistency</strong> while using 74% fewer resources</li>
-                    </ul>
-
-                    <div class="figure">
-                        <img src="graphs/computational_efficiency.png" alt="Computational Efficiency" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 6:</strong> Computational efficiency comparison showing S2C achieves superior
-                            accuracy while using significantly fewer computational resources than ensemble methods.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Discussion -->
-            <section id="discussion" class="section">
-                <h2><i class="fas fa-comments"></i> Discussion</h2>
-                <div class="content-block">
-
-                    <h3>Theoretical Implications</h3>
-                    <p>Our results provide evidence for several important insights about LLM reasoning capabilities:</p>
-                    <ul>
-                        <li><strong>Metacognitive Development:</strong> The success of S2C demonstrates that LLMs can develop sophisticated metacognitive skills when provided with appropriate training signals and structured frameworks.</li>
-                        <li><strong>Process vs. Outcome Supervision:</strong> The superior performance of process-based rewards validates educational psychology research showing that process-focused feedback leads to better learning outcomes.</li>
-                        <li><strong>Structured Reasoning Decomposition:</strong> The three-stage architecture provides a principled framework for decomposing complex reasoning tasks, potentially applicable beyond mathematical domains.</li>
-                    </ul>
-
-                    <h3>Limitations and Future Work</h3>
-                    <p>Several limitations suggest directions for future research:</p>
-                    <ul>
-                        <li><strong>Domain Specificity:</strong> While S2C shows strong performance on mathematical reasoning, generalization to other specialized domains requires further investigation.</li>
-                        <li><strong>Conceptual Error Correction:</strong> Our analysis reveals that conceptual errors remain challenging to correct, suggesting need for specialized techniques.</li>
-                        <li><strong>Scalability:</strong> Experiments focus on 8B parameter models; investigating scaling behavior with larger models could provide insights into the relationship between model capacity and self-correction capabilities.</li>
-                        <li><strong>Real-time Applications:</strong> Current implementation requires multiple inference passes; developing more efficient architectures for real-time applications represents an important engineering challenge.</li>
-                    </ul>
-
-                    <div class="figure">
-                        <img src="graphs/qualitative_s2c_example.png" alt="Qualitative Example" class="figure-img">
-                        <p class="figure-caption">
-                            <strong>Figure 7:</strong> Qualitative example demonstrating the S2C framework in action.
-                            The three-stage process shows how initial errors are identified and corrected through systematic critique and synthesis.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Resources -->
-            <section id="resources" class="section">
-                <h2><i class="fas fa-archive"></i> Resources</h2>
-                <div class="content-block">
-
-                    <div class="resources-grid">
-                        <div class="resource-card">
-                            <i class="fas fa-file-pdf"></i>
-                            <h4>Research Paper</h4>
-                            <p>Complete technical paper with detailed methodology and experimental results</p>
-                            <a href="paper/final_report_comprehensive.pdf" class="resource-link">Download PDF</a>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>GSM8K</th>
+                                        <th>MATH</th>
+                                        <th>AQuA</th>
+                                        <th>MathQA</th>
+                                        <th>StrategyQA</th>
+                                        <th>CSQA</th>
+                                        <th>Average</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CoT Prompting</td>
+                                        <td>31.2</td>
+                                        <td>12.4</td>
+                                        <td>23.7</td>
+                                        <td>18.9</td>
+                                        <td>68.9</td>
+                                        <td>72.1</td>
+                                        <td>37.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Self-Consistency</td>
+                                        <td>38.7</td>
+                                        <td>15.2</td>
+                                        <td>28.4</td>
+                                        <td>22.1</td>
+                                        <td>73.4</td>
+                                        <td>75.3</td>
+                                        <td>42.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>External Verifier</td>
+                                        <td>41.3</td>
+                                        <td>16.8</td>
+                                        <td>29.7</td>
+                                        <td>23.5</td>
+                                        <td>71.2</td>
+                                        <td>74.6</td>
+                                        <td>42.9</td>
+                                    </tr>
+                                    <tr class="highlight-row">
+                                        <td><strong>S2C (Ours)</strong></td>
+                                        <td><strong>49.9</strong></td>
+                                        <td><strong>21.3</strong></td>
+                                        <td><strong>35.6</strong></td>
+                                        <td><strong>28.4</strong></td>
+                                        <td><strong>76.4</strong></td>
+                                        <td><strong>78.1</strong></td>
+                                        <td><strong>48.3</strong></td>
+                                    </tr>
+                                    <tr class="improvement-row">
+                                        <td><em>Rel. Improvement</em></td>
+                                        <td><em>+60%</em></td>
+                                        <td><em>+71%</em></td>
+                                        <td><em>+50%</em></td>
+                                        <td><em>+50%</em></td>
+                                        <td><em>+11%</em></td>
+                                        <td><em>+8%</em></td>
+                                        <td><em>+27%</em></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div class="resource-card">
-                            <i class="fab fa-github"></i>
-                            <h4>Source Code</h4>
-                            <p>Complete implementation with training scripts, evaluation tools, and documentation</p>
-                            <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research" class="resource-link">View Repository</a>
+                        <div class="figure">
+                            <img src="graphs/gsm8k_main_results.png" alt="GSM8K Results" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 3:</strong> GSM8K performance comparison showing S2C achieving 49.9% accuracy
+                                compared to 31.2% baseline, representing a 60% relative improvement. Error bars show 95% confidence intervals.
+                            </p>
                         </div>
 
-                        <div class="resource-card">
-                            <i class="fas fa-download"></i>
-                            <h4>ArXiv Package</h4>
-                            <p>Complete submission package with LaTeX source and all figures</p>
-                            <a href="paper/arxiv_submission.tar.gz" class="resource-link">Download Package</a>
+                        <h3>Ablation Studies</h3>
+                        <p>Comprehensive ablation studies reveal the contribution of each framework component:</p>
+                        <ul class="results-list">
+                            <li>Supervised Fine-Tuning alone provides <strong>6.6 percentage point improvement</strong> over the base model</li>
+                            <li>Process-based rewards contribute an additional <strong>7.5 percentage points</strong> over outcome-only optimization</li>
+                            <li>The three-stage architecture is crucial: removing the Critic stage results in <strong>10.6 percentage point performance drop</strong></li>
+                            <li>Critical Points contribute <strong>5.2 percentage points</strong> to final performance</li>
+                        </ul>
+
+                        <div class="figure">
+                            <img src="graphs/ablation_study_results.png" alt="Ablation Study" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 4:</strong> Comprehensive ablation study showing the contribution of each S2C component.
+                                Results demonstrate that all components contribute significantly to overall performance.
+                            </p>
                         </div>
 
-                        <div class="resource-card">
-                            <i class="fas fa-chart-line"></i>
-                            <h4>Experimental Data</h4>
-                            <p>Raw results, ablation studies, and statistical analysis data</p>
-                            <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research/tree/main/data" class="resource-link">Access Data</a>
+                        <h3>Error Analysis</h3>
+                        <p>Detailed analysis reveals S2C's effectiveness across different error types:</p>
+                        <div class="error-analysis">
+                            <div class="error-type">
+                                <h4>Computational Errors (35% of errors)</h4>
+                                <div class="success-rate">78% correction success rate</div>
+                            </div>
+                            <div class="error-type">
+                                <h4>Logical Errors (28% of errors)</h4>
+                                <div class="success-rate">65% correction success rate</div>
+                            </div>
+                            <div class="error-type">
+                                <h4>Missing Steps (22% of errors)</h4>
+                                <div class="success-rate">71% correction success rate</div>
+                            </div>
+                            <div class="error-type">
+                                <h4>Conceptual Errors (15% of errors)</h4>
+                                <div class="success-rate">42% correction success rate</div>
+                            </div>
+                        </div>
+
+                        <div class="figure">
+                            <img src="graphs/error_analysis_comprehensive.png" alt="Error Analysis" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 5:</strong> Comprehensive error analysis showing S2C's effectiveness across different
+                                error types. The framework demonstrates highest effectiveness in correcting computational errors and missing steps.
+                            </p>
+                        </div>
+
+                        <h3>Computational Efficiency</h3>
+                        <p>Despite the multi-stage process, S2C achieves superior efficiency compared to ensemble methods:</p>
+                        <ul class="efficiency-list">
+                            <li>S2C uses <strong>641 average tokens</strong> vs 2,470 for Self-Consistency</li>
+                            <li>Inference time: <strong>3.8 seconds</strong> vs 12.1 seconds for Self-Consistency</li>
+                            <li>Accuracy improvement: <strong>29% higher than Self-Consistency</strong> while using 74% fewer resources</li>
+                        </ul>
+
+                        <div class="figure">
+                            <img src="graphs/computational_efficiency.png" alt="Computational Efficiency" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 6:</strong> Computational efficiency comparison showing S2C achieves superior
+                                accuracy while using significantly fewer computational resources than ensemble methods.
+                            </p>
                         </div>
                     </div>
+                </section>
 
-                    <!-- Citation -->
-                    <div id="bibtex" class="citation-section">
-                        <h3>Citation</h3>
-                        <div class="citation-box">
-                            <pre id="citation-text">@article{patel2024synergistic,
+                <!-- Discussion -->
+                <section id="discussion" class="section">
+                    <h2><i class="fas fa-comments"></i> Discussion</h2>
+                    <div class="content-block">
+
+                        <h3>Theoretical Implications</h3>
+                        <p>Our results provide evidence for several important insights about LLM reasoning capabilities:</p>
+                        <ul>
+                            <li><strong>Metacognitive Development:</strong> The success of S2C demonstrates that LLMs can develop sophisticated metacognitive skills when provided with appropriate training signals and structured frameworks.</li>
+                            <li><strong>Process vs. Outcome Supervision:</strong> The superior performance of process-based rewards validates educational psychology research showing that process-focused feedback leads to better learning outcomes.</li>
+                            <li><strong>Structured Reasoning Decomposition:</strong> The three-stage architecture provides a principled framework for decomposing complex reasoning tasks, potentially applicable beyond mathematical domains.</li>
+                        </ul>
+
+                        <h3>Limitations and Future Work</h3>
+                        <p>Several limitations suggest directions for future research:</p>
+                        <ul>
+                            <li><strong>Domain Specificity:</strong> While S2C shows strong performance on mathematical reasoning, generalization to other specialized domains requires further investigation.</li>
+                            <li><strong>Conceptual Error Correction:</strong> Our analysis reveals that conceptual errors remain challenging to correct, suggesting need for specialized techniques.</li>
+                            <li><strong>Scalability:</strong> Experiments focus on 8B parameter models; investigating scaling behavior with larger models could provide insights into the relationship between model capacity and self-correction capabilities.</li>
+                            <li><strong>Real-time Applications:</strong> Current implementation requires multiple inference passes; developing more efficient architectures for real-time applications represents an important engineering challenge.</li>
+                        </ul>
+
+                        <div class="figure">
+                            <img src="graphs/qualitative_s2c_example.png" alt="Qualitative Example" class="figure-img">
+                            <p class="figure-caption">
+                                <strong>Figure 7:</strong> Qualitative example demonstrating the S2C framework in action.
+                                The three-stage process shows how initial errors are identified and corrected through systematic critique and synthesis.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Resources -->
+                <section id="resources" class="section">
+                    <h2><i class="fas fa-archive"></i> Resources</h2>
+                    <div class="content-block">
+
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <i class="fas fa-file-pdf"></i>
+                                <h4>Research Paper</h4>
+                                <p>Complete technical paper with detailed methodology and experimental results</p>
+                                <a href="paper/final_report_comprehensive.pdf" class="resource-link">Download PDF</a>
+                            </div>
+
+                            <div class="resource-card">
+                                <i class="fab fa-github"></i>
+                                <h4>Source Code</h4>
+                                <p>Complete implementation with training scripts, evaluation tools, and documentation</p>
+                                <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" class="resource-link">View Repository</a>
+                            </div>
+
+                            <div class="resource-card">
+                                <i class="fas fa-download"></i>
+                                <h4>ArXiv Package</h4>
+                                <p>Complete submission package with LaTeX source and all figures</p>
+                                <a href="paper/arxiv_submission.tar.gz" class="resource-link">Download Package</a>
+                            </div>
+
+                            <div class="resource-card">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Experimental Data</h4>
+                                <p>Raw results, ablation studies, and statistical analysis data</p>
+                                <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost/tree/main/data" class="resource-link">Access Data</a>
+                            </div>
+                        </div>
+
+                        <!-- Citation -->
+                        <div id="bibtex" class="citation-section">
+                            <h3>Citation</h3>
+                            <div class="citation-box">
+                                <pre id="citation-text">@article{patel2024synergistic,
   title={Synergistic Self-Correction: A Hierarchical Framework for Multi-Stage Reasoning and Error Recovery in Large Language Models},
   author={Patel, Pratham and Jindal, Abhishek},
   journal={arXiv preprint arXiv:2409.12345},
   year={2024},
   institution={Dhirubhai Ambani Institute of Information and Communication Technology}
 }</pre>
-                            <button class="copy-btn" onclick="copyToClipboard()">
-                                <i class="fas fa-copy"></i> Copy BibTeX
-                            </button>
+                                <button class="copy-btn" onclick="copyToClipboard()">
+                                    <i class="fas fa-copy"></i> Copy BibTeX
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Contact -->
-                    <div class="contact-section">
-                        <h3>Contact</h3>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <strong>Pratham Patel</strong><br>
-                                Gannon University<br>
-                                <a href="mailto:patel292@gannon.edu">patel292@gannon.edu</a>
-                            </div>
-                            <div class="contact-item">
-                                <strong>Abhishek Jindal</strong> (Corresponding Author)<br>
-                                DA-IICT<br>
-                                <a href="mailto:abhishek_jindal@daiict.ac.in">abhishek_jindal@daiict.ac.in</a>
+                        <!-- Contact -->
+                        <div class="contact-section">
+                            <h3>Contact</h3>
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <strong>Pratham Patel</strong><br>
+                                    Gannon University<br>
+                                    <a href="mailto:patel292@gannon.edu">patel292@gannon.edu</a>
+                                </div>
+                                <div class="contact-item">
+                                    <strong>Abhishek Jindal</strong> (Corresponding Author)<br>
+                                    DA-IICT<br>
+                                    <a href="mailto:abhishek_jindal@daiict.ac.in">abhishek_jindal@daiict.ac.in</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+            </div><!-- end gated-content -->
 
         </div>
     </main>
@@ -501,11 +868,8 @@
                     <p>This work was supported by the Student Research Initiative (SRI) program at DA-IICT.</p>
                 </div>
                 <div class="footer-links">
-                    <a href="https://github.com/CodeWithInferno/Self-Correcting-LLM-Research">
+                    <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost">
                         <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="paper/final_report_comprehensive.pdf">
-                        <i class="fas fa-file-pdf"></i> Paper
                     </a>
                     <a href="mailto:patel292@gannon.edu">
                         <i class="fas fa-envelope"></i> Contact
@@ -521,5 +885,75 @@
     </button>
 
     <script src="script.js"></script>
+    <script>
+    // Password verification using SHA-256 hash comparison
+    // The actual password is never stored in the source code
+    const DOCS_ACCESS_HASH = '5b484d8b2799daf74779ce686501847d4a08b5e917c1e8395e1da7f7e73bce0d';
+
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function scrollToGate(e) {
+        e.preventDefault();
+        document.getElementById('access-gate').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function unlockContent() {
+        document.getElementById('gated-content').classList.add('unlocked');
+        // Show the real PDF/Data links in header, hide the restricted ones
+        document.querySelectorAll('.gated-link').forEach(el => el.classList.add('unlocked'));
+        // Hide the "restricted" placeholder buttons
+        document.querySelectorAll('.paper-links a[onclick="scrollToGate(event)"]').forEach(el => {
+            el.style.display = 'none';
+        });
+    }
+
+    async function verifyDocsPassword() {
+        const input = document.getElementById('docs-access-password').value;
+        const errorEl = document.getElementById('docs-pw-error');
+        const successEl = document.getElementById('docs-pw-success');
+
+        errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+
+        if (!input) {
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        const hash = await sha256(input);
+
+        if (hash === DOCS_ACCESS_HASH) {
+            successEl.style.display = 'block';
+            unlockContent();
+            sessionStorage.setItem('docsAccess', 'granted');
+        } else {
+            errorEl.style.display = 'block';
+            document.getElementById('docs-access-password').value = '';
+        }
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('DOMContentLoaded', function() {
+        var pwInput = document.getElementById('docs-access-password');
+        if (pwInput) {
+            pwInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verifyDocsPassword();
+                }
+            });
+        }
+
+        // Check if access was already granted in this session
+        if (sessionStorage.getItem('docsAccess') === 'granted') {
+            document.getElementById('docs-pw-success').style.display = 'block';
+            unlockContent();
+        }
+    });
+    </script>
 </body>
-</html><!-- Website redeployed Thu Sep 25 16:48:23 EDT 2025 -->
+</html>
