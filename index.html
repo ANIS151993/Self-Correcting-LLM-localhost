@@ -179,8 +179,12 @@
                 grid-template-columns: 1fr;
             }
 
-            .video-container iframe {
-                height: 280px;
+            .video-play-area {
+                height: 300px;
+            }
+
+            .pdf-preview-img {
+                max-height: 400px;
             }
         }
 
@@ -242,20 +246,85 @@
             font-size: 0.95em;
         }
 
-        .video-container {
+        /* Click-to-play video card */
+        .video-play-area {
             position: relative;
             z-index: 1;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(102, 126, 234, 0.3);
+            background: #000;
+            height: 520px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .video-container iframe {
-            display: block;
+        .video-play-area iframe {
             width: 100%;
-            height: 520px;
+            height: 100%;
             border: none;
+            display: none;
+        }
+
+        .video-play-area.active iframe {
+            display: block;
+        }
+
+        .video-play-area.active .video-play-overlay {
+            display: none;
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 52, 96, 0.95) 100%);
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
+
+        .play-btn-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #ff0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .video-play-area:hover .play-btn-circle {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.6);
+        }
+
+        .play-btn-circle svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+            margin-left: 5px;
+        }
+
+        .video-play-overlay p {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .video-play-overlay .sub-text {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.9em;
+            font-weight: 400;
+            margin-top: 6px;
         }
 
         .video-footer {
@@ -303,6 +372,47 @@
         .gh-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* PDF Preview Styles */
+        .pdf-preview-container {
+            position: relative;
+            margin-bottom: 0;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .pdf-preview-img {
+            display: block;
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            object-position: top center;
+            background: white;
+        }
+
+        .pdf-preview-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 180px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(248, 249, 255, 0.7) 40%, #f0f2ff 100%);
+            pointer-events: none;
+        }
+
+        .pdf-preview-label {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         /* Access Gate Styles */
@@ -562,9 +672,15 @@
                         <h3>Research Walkthrough</h3>
                         <p>Watch a detailed explanation of the S2C framework, methodology, and key results</p>
                     </div>
-                    <div class="video-container">
-                        <iframe
-                            src="https://www.youtube.com/embed/9ePEgLc8maQ?rel=0&modestbranding=1"
+                    <div class="video-play-area" id="video-player" onclick="loadVideo()">
+                        <div class="video-play-overlay">
+                            <div class="play-btn-circle">
+                                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                            </div>
+                            <p>Click to Play Video</p>
+                            <p class="sub-text">S2C Framework - Research Overview</p>
+                        </div>
+                        <iframe id="video-iframe"
                             title="S2C Framework - Research Overview"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin"
@@ -572,7 +688,7 @@
                         </iframe>
                     </div>
                     <div class="video-footer">
-                        <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="yt-btn">
+                        <a href="https://youtu.be/9ePEgLc8maQ" target="_blank" rel="noopener" class="yt-btn">
                             &#9654; Watch on YouTube
                         </a>
                         <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" target="_blank" rel="noopener" class="gh-btn">
@@ -604,7 +720,15 @@
             <!-- Access Gate Section -->
             <div class="section">
                 <h2>Read the Full Paper</h2>
-                <div class="access-gate" id="access-gate">
+
+                <!-- PDF First Page Preview -->
+                <div class="pdf-preview-container">
+                    <span class="pdf-preview-label">Page 1 of 7 - Preview</span>
+                    <img src="paper-page1-preview.png" alt="Research Paper - First Page Preview" class="pdf-preview-img">
+                    <div class="pdf-preview-fade"></div>
+                </div>
+
+                <div class="access-gate" id="access-gate" style="border-radius: 0 0 12px 12px; margin-top: 0; border-top: none;">
                     <h3>Access Restricted</h3>
                     <p>To read or download the full research paper, please complete the following steps and enter the access password.</p>
 
@@ -619,7 +743,7 @@
                             <span class="step-icon">Step 2</span>
                             <h4>Subscribe on YouTube</h4>
                             <p>Subscribe to our channel for video explanations and research walkthroughs.</p>
-                            <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="step-btn step-btn-youtube">Subscribe on YouTube</a>
+                            <a href="https://youtu.be/9ePEgLc8maQ" target="_blank" rel="noopener" class="step-btn step-btn-youtube">Subscribe on YouTube</a>
                         </div>
                         <div class="gate-step">
                             <span class="step-icon">Step 3</span>
@@ -696,6 +820,26 @@
     </div>
 
     <script>
+    // Load YouTube video on click (works even if embed is restricted - opens YouTube)
+    function loadVideo() {
+        var player = document.getElementById('video-player');
+        var iframe = document.getElementById('video-iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/9ePEgLc8maQ?autoplay=1&rel=0&modestbranding=1';
+        player.classList.add('active');
+        // Fallback: if iframe fails to load, open YouTube directly after 3s
+        setTimeout(function() {
+            try {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                // If we can access it and it's empty/error, open YouTube
+                if (!iframeDoc || !iframeDoc.body || iframeDoc.body.innerHTML === '') {
+                    window.open('https://youtu.be/9ePEgLc8maQ', '_blank');
+                }
+            } catch(e) {
+                // Cross-origin means iframe loaded (YouTube content), which is good
+            }
+        }, 3000);
+    }
+
     // Password verification using SHA-256 hash comparison
     // The actual password is never stored in the source code
     const ACCESS_HASH = '5b484d8b2799daf74779ce686501847d4a08b5e917c1e8395e1da7f7e73bce0d';

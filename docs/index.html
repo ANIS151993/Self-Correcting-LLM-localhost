@@ -194,12 +194,15 @@
             .pw-form input[type="password"] {
                 width: 100%;
             }
-            .video-container iframe {
-                height: 250px;
+            .video-play-box {
+                height: 280px;
+            }
+            .docs-pdf-preview-img {
+                max-height: 400px;
             }
         }
 
-        /* Video Overview Styles */
+        /* Video Overview Styles - Click to Play */
         .video-overview-wrapper {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             border-radius: 14px;
@@ -240,19 +243,74 @@
             color: rgba(255,255,255,0.65);
             font-size: 0.95rem;
         }
-        .video-container {
+        .video-play-box {
             position: relative;
             z-index: 1;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 8px 30px rgba(0,0,0,0.35);
             border: 2px solid rgba(44, 82, 130, 0.3);
-        }
-        .video-container iframe {
-            display: block;
-            width: 100%;
+            background: #000;
             height: 480px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-play-box iframe {
+            width: 100%;
+            height: 100%;
             border: none;
+            display: none;
+        }
+        .video-play-box.active iframe {
+            display: block;
+        }
+        .video-play-box.active .vid-play-overlay {
+            display: none;
+        }
+        .vid-play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 52, 96, 0.95) 100%);
+            z-index: 2;
+        }
+        .vid-play-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ff0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 16px;
+        }
+        .video-play-box:hover .vid-play-btn {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.6);
+        }
+        .vid-play-btn svg {
+            width: 36px;
+            height: 36px;
+            fill: white;
+            margin-left: 4px;
+        }
+        .vid-play-overlay p {
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .vid-play-overlay .vid-sub {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-top: 5px;
         }
         .video-actions {
             display: flex;
@@ -295,6 +353,43 @@
             background: rgba(255,255,255,0.2);
             box-shadow: 0 4px 15px rgba(255,255,255,0.1);
             color: white;
+        }
+
+        /* PDF Preview */
+        .docs-pdf-preview {
+            position: relative;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+        }
+        .docs-pdf-preview-img {
+            display: block;
+            width: 100%;
+            max-height: 550px;
+            object-fit: contain;
+            object-position: top center;
+            background: white;
+        }
+        .docs-pdf-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 160px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(248,249,255,0.7) 40%, #f0f2ff 100%);
+            pointer-events: none;
+        }
+        .docs-pdf-label {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary-color, #2c5282);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
     </style>
 </head>
@@ -407,9 +502,15 @@
                             <h3>Research Walkthrough</h3>
                             <p>Watch a detailed explanation of the S2C framework, methodology, and key results</p>
                         </div>
-                        <div class="video-container">
-                            <iframe
-                                src="https://www.youtube.com/embed/9ePEgLc8maQ?rel=0&modestbranding=1"
+                        <div class="video-play-box" id="docs-video-player" onclick="loadDocsVideo()">
+                            <div class="vid-play-overlay">
+                                <div class="vid-play-btn">
+                                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                                </div>
+                                <p>Click to Play Video</p>
+                                <p class="vid-sub">S2C Framework - Research Overview</p>
+                            </div>
+                            <iframe id="docs-video-iframe"
                                 title="S2C Framework - Research Overview"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
@@ -417,7 +518,7 @@
                             </iframe>
                         </div>
                         <div class="video-actions">
-                            <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="vid-yt-btn">
+                            <a href="https://youtu.be/9ePEgLc8maQ" target="_blank" rel="noopener" class="vid-yt-btn">
                                 <i class="fab fa-youtube"></i> Watch on YouTube
                             </a>
                             <a href="https://github.com/ANIS151993/Self-Correcting-LLM-localhost" target="_blank" rel="noopener" class="vid-gh-btn">
@@ -432,7 +533,15 @@
             <section id="access-gate" class="section">
                 <h2><i class="fas fa-lock"></i> Access Full Paper</h2>
                 <div class="content-block">
-                    <div class="access-gate-banner" id="access-gate-banner">
+
+                    <!-- PDF First Page Preview -->
+                    <div class="docs-pdf-preview">
+                        <span class="docs-pdf-label">Page 1 of 7 - Preview</span>
+                        <img src="assets/paper-page1-preview.png" alt="Research Paper - First Page Preview" class="docs-pdf-preview-img">
+                        <div class="docs-pdf-fade"></div>
+                    </div>
+
+                    <div class="access-gate-banner" id="access-gate-banner" style="border-radius: 0 0 12px 12px; margin-top: 0; border-top: none;">
                         <h3>Full Paper Access Restricted</h3>
                         <p>The Abstract above is publicly available. To read the full paper, download PDFs, or access detailed sections (Introduction, Methodology, Results, Discussion), please complete the following steps and enter the access password.</p>
 
@@ -447,7 +556,7 @@
                                 <span class="step-num">2</span>
                                 <h4>Subscribe on YouTube</h4>
                                 <p>Subscribe to our channel for video explanations and research walkthroughs.</p>
-                                <a href="https://www.youtube.com/watch?v=9ePEgLc8maQ" target="_blank" rel="noopener" class="step-action-btn btn-yt">Subscribe on YouTube</a>
+                                <a href="https://youtu.be/9ePEgLc8maQ" target="_blank" rel="noopener" class="step-action-btn btn-yt">Subscribe on YouTube</a>
                             </div>
                             <div class="access-step-card">
                                 <span class="step-num">3</span>
@@ -886,6 +995,22 @@
 
     <script src="script.js"></script>
     <script>
+    // Load YouTube video on click
+    function loadDocsVideo() {
+        var player = document.getElementById('docs-video-player');
+        var iframe = document.getElementById('docs-video-iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/9ePEgLc8maQ?autoplay=1&rel=0&modestbranding=1';
+        player.classList.add('active');
+        setTimeout(function() {
+            try {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc || !iframeDoc.body || iframeDoc.body.innerHTML === '') {
+                    window.open('https://youtu.be/9ePEgLc8maQ', '_blank');
+                }
+            } catch(e) { /* cross-origin = embed loaded fine */ }
+        }, 3000);
+    }
+
     // Password verification using SHA-256 hash comparison
     // The actual password is never stored in the source code
     const DOCS_ACCESS_HASH = '5b484d8b2799daf74779ce686501847d4a08b5e917c1e8395e1da7f7e73bce0d';
